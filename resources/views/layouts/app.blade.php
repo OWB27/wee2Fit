@@ -30,6 +30,10 @@
                         {{ __('messages.nav_dashboard') }}
                     </a>
 
+                    <a href="{{ route('my-profile.edit') }}" class="btn btn-ghost btn-sm">
+                    {{ __('messages.nav_my_profile') }}
+                    </a>
+
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <button type="submit" class="btn btn-outline btn-sm">
