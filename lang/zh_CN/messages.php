@@ -62,4 +62,25 @@ return [
     'intensity_mild' => '温和',
     'intensity_moderate' => '中等',
     'intensity_aggressive' => '激进',
+
+    'nav_generate_plan' => '生成计划',
+    'nav_current_plan' => '当前计划',
+    
+    'plan_generate_title' => '生成计划',
+    'plan_generate_description' => '使用你的资料数据生成营养计划。',
+    'plan_generate_button' => '生成我的计划',
+    'plan_regenerate_button' => '重新生成',
+    
+    'plan_current_title' => '当前计划',
+    'plan_generated_success' => '你的新计划已生成。',
+    'plan_profile_required' => '请先完善你的个人资料。',
+    'plan_not_found' => '当前还没有计划。',
+    
+    'plan_bmr' => '基础代谢率',
+    'plan_tdee' => '每日总消耗',
+    'plan_target_calories' => '目标热量',
+    'plan_goal' => '目标',
+    'plan_protein' => '蛋白质',
+    'plan_carbs' => '碳水',
+    'plan_fat' => '脂肪',
 ];

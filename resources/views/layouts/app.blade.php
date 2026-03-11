@@ -31,7 +31,15 @@
                     </a>
 
                     <a href="{{ route('my-profile.edit') }}" class="btn btn-ghost btn-sm">
-                    {{ __('messages.nav_my_profile') }}
+                        {{ __('messages.nav_my_profile') }}
+                    </a>
+
+                    <a href="{{ route('plans.create') }}" class="btn btn-ghost btn-sm">
+                        {{ __('messages.nav_generate_plan') }}
+                    </a>
+
+                    <a href="{{ route('plans.current') }}" class="btn btn-ghost btn-sm">
+                        {{ __('messages.nav_current_plan') }}
                     </a>
 
                     <form method="POST" action="{{ route('logout') }}">

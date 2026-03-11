@@ -62,4 +62,25 @@ return [
     'intensity_mild' => 'Mild',
     'intensity_moderate' => 'Moderate',
     'intensity_aggressive' => 'Aggressive',
+    'nav_generate_plan' => 'Generate Plan',
+
+    'nav_current_plan' => 'Current Plan',
+    
+    'plan_generate_title' => 'Generate Plan',
+    'plan_generate_description' => 'Use your profile data to generate a nutrition plan.',
+    'plan_generate_button' => 'Generate My Plan',
+    'plan_regenerate_button' => 'Generate Again',
+    
+    'plan_current_title' => 'Current Plan',
+    'plan_generated_success' => 'Your new plan has been generated.',
+    'plan_profile_required' => 'Please complete your profile first.',
+    'plan_not_found' => 'No current plan was found.',
+    
+    'plan_bmr' => 'BMR',
+    'plan_tdee' => 'TDEE',
+    'plan_target_calories' => 'Target Calories',
+    'plan_goal' => 'Goal',
+    'plan_protein' => 'Protein',
+    'plan_carbs' => 'Carbs',
+    'plan_fat' => 'Fat',
 ];
