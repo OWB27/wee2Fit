@@ -25,6 +25,10 @@
                     {{ __('messages.nav_methodology') }}
                 </a>
 
+                <a href="{{ route('foods.index') }}" class="btn btn-ghost btn-sm">
+                {{ __('messages.nav_food_library') }}
+                </a>
+
                 @auth
                     <a href="{{ route('dashboard') }}" class="btn btn-ghost btn-sm">
                         {{ __('messages.nav_dashboard') }}
@@ -42,6 +46,12 @@
                         {{ __('messages.nav_current_plan') }}
                     </a>
 
+                    @if (auth()->user()->role === 'admin')
+                    <a href="{{ route('admin.dashboard') }}" class="btn btn-ghost btn-sm">
+                        {{ __('messages.nav_admin') }}
+                    </a>
+                    @endif
+                    
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <button type="submit" class="btn btn-outline btn-sm">
