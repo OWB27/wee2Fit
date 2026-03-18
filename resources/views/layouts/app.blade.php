@@ -91,6 +91,18 @@
     </div>
 
     <main class="container mx-auto px-4 py-8">
+        @if (session('success'))
+            <div class="alert alert-success mb-6">
+                <span>{{ session('success') }}</span>
+            </div>
+        @endif
+
+        @if (session('error'))
+            <div class="alert alert-error mb-6">
+        <span>{{ session('error') }}</span>
+            </div>
+        @endif
+        
         {{ $slot ?? '' }}
         @yield('content')
     </main>

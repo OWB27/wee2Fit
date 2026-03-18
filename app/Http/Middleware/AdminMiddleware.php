@@ -12,7 +12,7 @@ class AdminMiddleware
     {
         $user = $request->user();
 
-        if (! $user || $user->role !== 'admin' || ! $user->is_active) {
+        if (! $user || ! $user->isAdmin() || ! $user->isActive()) {
             abort(403);
         }
 

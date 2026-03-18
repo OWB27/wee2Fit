@@ -54,4 +54,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(BodyMetric::class);
     }
+
+    public function isAdmin(): bool
+    {
+        return $this->role === self::ROLE_ADMIN;
+    }
+
+    public function isActive(): bool
+    {
+        return $this->is_active;
+    }
 }

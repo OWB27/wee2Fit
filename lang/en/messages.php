@@ -125,4 +125,6 @@ return [
     'save' => 'Save',
     'yes' => 'Yes',
     'no' => 'No',
+
+    'account_inactive' => 'Your account is inactive. Please contact an administrator.',
 ];
