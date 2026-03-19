@@ -1,6 +1,12 @@
 <x-guest-layout>
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
+    
+    @if (session('error'))
+    <div class="alert alert-error mb-4">
+        <span>{{ session('error') }}</span>
+    </div>
+    @endif
 
     <form method="POST" action="{{ route('login') }}">
         @csrf
@@ -44,4 +50,4 @@
             </x-primary-button>
         </div>
     </form>
-</x-guest-layout artisan make:request StoreBodyMetricRequestut>
+</x-guest-layout>

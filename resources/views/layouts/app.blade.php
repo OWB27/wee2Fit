@@ -46,6 +46,10 @@
                         {{ __('messages.nav_current_plan') }}
                     </a>
 
+                    <a href="{{ route('progress.index') }}" class="btn btn-ghost btn-sm">
+                        {{ __('messages.nav_progress') }}
+                    </a>
+
                     @if (auth()->user()->role === 'admin')
                     <a href="{{ route('admin.dashboard') }}" class="btn btn-ghost btn-sm">
                         {{ __('messages.nav_admin') }}

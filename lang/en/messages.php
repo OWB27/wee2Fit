@@ -127,4 +127,20 @@ return [
     'no' => 'No',
 
     'account_inactive' => 'Your account is inactive. Please contact an administrator.',
+
+    'nav_progress' => 'Progress',
+
+    'progress_title' => 'Progress & Metrics',
+    'progress_description' => 'Track your body metrics over time.',
+    'progress_add_metric' => 'Add Body Metric',
+    'progress_recorded_on' => 'Recorded On',
+    'progress_body_fat_percentage' => 'Body Fat Percentage (%)',
+    'progress_note' => 'Note',
+    'progress_save_metric' => 'Save Metric',
+    'progress_weight_trend' => 'Weight Trend',
+    'progress_history' => 'History',
+    'progress_empty' => 'No body metrics found.',
+    'progress_no_chart_data' => 'No chart data yet.',
+    'progress_metric_created' => 'Body metric saved successfully.',
+    'progress_metric_deleted' => 'Body metric deleted successfully.',
 ];

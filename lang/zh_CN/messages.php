@@ -127,4 +127,20 @@ return [
     'no' => '否',
 
     'account_inactive' => '你的账号已被停用，请联系管理员。',
+
+    'nav_progress' => '进度追踪',
+
+    'progress_title' => '进度与身体指标',
+    'progress_description' => '记录并查看你的身体指标变化。',
+    'progress_add_metric' => '新增身体指标',
+    'progress_recorded_on' => '记录日期',
+    'progress_body_fat_percentage' => '体脂率（%）',
+    'progress_note' => '备注',
+    'progress_save_metric' => '保存记录',
+    'progress_weight_trend' => '体重趋势',
+    'progress_history' => '历史记录',
+    'progress_empty' => '暂无身体指标记录。',
+    'progress_no_chart_data' => '暂无图表数据。',
+    'progress_metric_created' => '身体指标保存成功。',
+    'progress_metric_deleted' => '身体指标删除成功。',
 ];

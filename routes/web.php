@@ -10,6 +10,7 @@ use App\Http\Controllers\MethodologyController;
 use App\Http\Controllers\MyProfileController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\BodyMetricController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -35,6 +36,10 @@ Route::middleware(['auth', 'active'])->group(function () {
     Route::get('/plans/generate', [PlanController::class, 'create'])->name('plans.create');
     Route::post('/plans/generate', [PlanController::class, 'store'])->name('plans.store');
     Route::get('/plans/current', [PlanController::class, 'showCurrent'])->name('plans.current');
+
+    Route::get('/progress', [BodyMetricController::class, 'index'])->name('progress.index');
+    Route::post('/progress', [BodyMetricController::class, 'store'])->name('progress.store');
+    Route::delete('/progress/{bodyMetric}', [BodyMetricController::class, 'destroy'])->name('progress.destroy');
 });
 
 Route::middleware(['auth', 'active', 'admin'])->prefix('admin')->name('admin.')->group(function () {
