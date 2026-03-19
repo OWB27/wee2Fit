@@ -143,4 +143,53 @@ return [
     'progress_no_chart_data' => '暂无图表数据。',
     'progress_metric_created' => '身体指标保存成功。',
     'progress_metric_deleted' => '身体指标删除成功。',
+
+    'nav_weekly_plans' => '每周计划',
+
+    'weekly_plans_title' => '每周饮食计划',
+    'weekly_plans_description' => '创建并管理你的每周饮食计划。',
+    'weekly_plan_create' => '新建每周计划',
+    'weekly_plan_created' => '每周计划创建成功。',
+    'weekly_plan_updated' => '每周计划更新成功。',
+    'weekly_plan_empty' => '暂无每周计划。',
+    'weekly_plan_open_planner' => '打开计划器',
+
+    'weekly_plan_title' => '标题',
+    'weekly_plan_week_start_date' => '周开始日期',
+    'weekly_plan_note' => '备注',
+    'weekly_plan_is_finalized' => '已完成',
+    'weekly_plan_basic_info' => '基本信息',
+    'weekly_plan_planner' => '每周饮食计划器',
+
+    'weekly_plan_add_food' => '添加食物',
+    'weekly_plan_add_food_button' => '添加食物',
+    'weekly_plan_food_added' => '食物已添加到每周计划。',
+    'weekly_plan_food_deleted' => '食物已从每周计划中移除。',
+    'weekly_plan_amount_g' => '重量（g）',
+    'weekly_plan_slot_empty' => '还没有添加食物',
+
+    'weekly_summary_title' => '每周汇总',
+    'weekly_summary_total_kcal' => '一周总热量',
+    'weekly_summary_avg_vs_target' => '平均值 vs 目标',
+    'weekly_summary_avg_daily' => '日均',
+    'weekly_summary_target' => '目标',
+    'weekly_summary_difference' => '差值',
+    'weekly_summary_macros_totals' => '宏量营养素总计',
+
+    'meal_type_breakfast' => '早餐',
+    'meal_type_lunch' => '午餐',
+    'meal_type_dinner' => '晚餐',
+    'meal_type_snack' => '加餐',
+
+    'day_monday' => '星期一',
+    'day_tuesday' => '星期二',
+    'day_wednesday' => '星期三',
+    'day_thursday' => '星期四',
+    'day_friday' => '星期五',
+    'day_saturday' => '星期六',
+    'day_sunday' => '星期日',
+
+    'cancel' => '取消',
+
+    'close' => '关闭',
 ];

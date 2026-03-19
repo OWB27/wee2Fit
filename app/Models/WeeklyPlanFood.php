@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class WeeklyPlanFood extends Model
 {
     protected $table = 'weekly_plan_foods';
-    
+
     public const MEAL_TYPE_OPTIONS = ['breakfast', 'lunch', 'dinner', 'snack'];
 
     protected $fillable = [
@@ -33,5 +33,25 @@ class WeeklyPlanFood extends Model
     public function food()
     {
         return $this->belongsTo(Food::class);
+    }
+
+    public function calories(): float
+    {
+        return ((float) $this->food->calories_per_100g) * ((float) $this->amount_g) / 100;
+    }
+
+    public function proteinGrams(): float
+    {
+        return ((float) $this->food->protein_per_100g) * ((float) $this->amount_g) / 100;
+    }
+
+    public function carbsGrams(): float
+    {
+        return ((float) $this->food->carbs_per_100g) * ((float) $this->amount_g) / 100;
+    }
+
+    public function fatGrams(): float
+    {
+        return ((float) $this->food->fat_per_100g) * ((float) $this->amount_g) / 100;
     }
 }

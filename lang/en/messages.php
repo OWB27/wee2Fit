@@ -143,4 +143,53 @@ return [
     'progress_no_chart_data' => 'No chart data yet.',
     'progress_metric_created' => 'Body metric saved successfully.',
     'progress_metric_deleted' => 'Body metric deleted successfully.',
+
+    'nav_weekly_plans' => 'Weekly Plans',
+
+    'weekly_plans_title' => 'Weekly Plans',
+    'weekly_plans_description' => 'Create and manage your weekly meal plans.',
+    'weekly_plan_create' => 'Create Weekly Plan',
+    'weekly_plan_created' => 'Weekly plan created successfully.',
+    'weekly_plan_updated' => 'Weekly plan updated successfully.',
+    'weekly_plan_empty' => 'No weekly plans found.',
+    'weekly_plan_open_planner' => 'Open Planner',
+
+    'weekly_plan_title' => 'Title',
+    'weekly_plan_week_start_date' => 'Week Start Date',
+    'weekly_plan_note' => 'Note',
+    'weekly_plan_is_finalized' => 'Finalized',
+    'weekly_plan_basic_info' => 'Basic Information',
+    'weekly_plan_planner' => 'Weekly Meal Planner',
+
+    'weekly_plan_add_food' => 'Add Food',
+    'weekly_plan_add_food_button' => 'Add Food',
+    'weekly_plan_food_added' => 'Food added to weekly plan.',
+    'weekly_plan_food_deleted' => 'Food removed from weekly plan.',
+    'weekly_plan_amount_g' => 'Amount (g)',
+    'weekly_plan_slot_empty' => 'No food added',
+
+    'weekly_summary_title' => 'Weekly Summary',
+    'weekly_summary_total_kcal' => 'Weekly Total Calories',
+    'weekly_summary_avg_vs_target' => 'Average vs Target',
+    'weekly_summary_avg_daily' => 'Average daily',
+    'weekly_summary_target' => 'Target',
+    'weekly_summary_difference' => 'Difference',
+    'weekly_summary_macros_totals' => 'Macros Totals',
+
+    'meal_type_breakfast' => 'Breakfast',
+    'meal_type_lunch' => 'Lunch',
+    'meal_type_dinner' => 'Dinner',
+    'meal_type_snack' => 'Snack',
+
+    'day_monday' => 'Monday',
+    'day_tuesday' => 'Tuesday',
+    'day_wednesday' => 'Wednesday',
+    'day_thursday' => 'Thursday',
+    'day_friday' => 'Friday',
+    'day_saturday' => 'Saturday',
+    'day_sunday' => 'Sunday',
+
+    'cancel' => 'Cancel',
+
+    'close' => 'Close',
 ];

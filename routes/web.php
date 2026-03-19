@@ -11,6 +11,8 @@ use App\Http\Controllers\MyProfileController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BodyMetricController;
+use App\Http\Controllers\WeeklyPlanController;
+use App\Http\Controllers\WeeklyPlanFoodController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -40,6 +42,16 @@ Route::middleware(['auth', 'active'])->group(function () {
     Route::get('/progress', [BodyMetricController::class, 'index'])->name('progress.index');
     Route::post('/progress', [BodyMetricController::class, 'store'])->name('progress.store');
     Route::delete('/progress/{bodyMetric}', [BodyMetricController::class, 'destroy'])->name('progress.destroy');
+
+    Route::get('/weekly-plans', [WeeklyPlanController::class, 'index'])->name('weekly-plans.index');
+    Route::get('/weekly-plans/create', [WeeklyPlanController::class, 'create'])->name('weekly-plans.create');
+    Route::post('/weekly-plans', [WeeklyPlanController::class, 'store'])->name('weekly-plans.store');
+    Route::get('/weekly-plans/{weeklyPlan}', [WeeklyPlanController::class, 'show'])->name('weekly-plans.show');
+    Route::put('/weekly-plans/{weeklyPlan}', [WeeklyPlanController::class, 'update'])->name('weekly-plans.update');
+
+    Route::post('/weekly-plans/{weeklyPlan}/foods', [WeeklyPlanFoodController::class, 'store'])->name('weekly-plan-foods.store');
+    Route::delete('/weekly-plan-foods/{weeklyPlanFood}', [WeeklyPlanFoodController::class, 'destroy'])->name('weekly-plan-foods.destroy');
+
 });
 
 Route::middleware(['auth', 'active', 'admin'])->prefix('admin')->name('admin.')->group(function () {
