@@ -13,6 +13,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BodyMetricController;
 use App\Http\Controllers\WeeklyPlanController;
 use App\Http\Controllers\WeeklyPlanFoodController;
+use App\Http\Controllers\AdminUserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -63,6 +64,9 @@ Route::middleware(['auth', 'active', 'admin'])->prefix('admin')->name('admin.')-
     Route::get('/foods/{food}/edit', [AdminFoodController::class, 'edit'])->name('foods.edit');
     Route::put('/foods/{food}', [AdminFoodController::class, 'update'])->name('foods.update');
     Route::delete('/foods/{food}', [AdminFoodController::class, 'destroy'])->name('foods.destroy');
+
+    Route::get('/users', [AdminUserController::class, 'index'])->name('users.index');
+    Route::patch('/users/{user}/toggle-active', [AdminUserController::class, 'toggleActive'])->name('users.toggle-active');
 });
 
 require __DIR__.'/auth.php';

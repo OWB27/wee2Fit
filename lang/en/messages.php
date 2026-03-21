@@ -192,4 +192,29 @@ return [
     'cancel' => 'Cancel',
 
     'close' => 'Close',
+
+    'admin_users_title' => 'Admin Users',
+    'admin_users_description' => 'View users and enable or disable accounts.',
+    'admin_manage_users' => 'Manage Users',
+    
+    'admin_users_name' => 'Name',
+    'admin_users_email' => 'Email',
+    'admin_users_role' => 'Role',
+    'admin_users_status' => 'Status',
+    
+    'admin_users_role_admin' => 'Admin',
+    'admin_users_role_user' => 'User',
+    
+    'admin_users_status_active' => 'Active',
+    'admin_users_status_inactive' => 'Inactive',
+    
+    'admin_users_enable' => 'Enable',
+    'admin_users_disable' => 'Disable',
+    'admin_users_current_you' => 'Current user',
+    'admin_users_empty' => 'No users found.',
+    
+    'admin_user_status_updated' => 'User status updated successfully.',
+    'admin_users_cannot_disable_self' => 'You cannot disable your own account.',
+    
+    'open' => 'Open',
 ];

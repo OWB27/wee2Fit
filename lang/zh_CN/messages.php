@@ -192,4 +192,29 @@ return [
     'cancel' => '取消',
 
     'close' => '关闭',
+
+    'admin_users_title' => '用户管理',
+    'admin_users_description' => '查看用户并启用或禁用账号。',
+    'admin_manage_users' => '管理用户',
+    
+    'admin_users_name' => '姓名',
+    'admin_users_email' => '邮箱',
+    'admin_users_role' => '角色',
+    'admin_users_status' => '状态',
+    
+    'admin_users_role_admin' => '管理员',
+    'admin_users_role_user' => '普通用户',
+    
+    'admin_users_status_active' => '启用中',
+    'admin_users_status_inactive' => '已停用',
+    
+    'admin_users_enable' => '启用',
+    'admin_users_disable' => '禁用',
+    'admin_users_current_you' => '当前登录用户',
+    'admin_users_empty' => '暂无用户。',
+    
+    'admin_user_status_updated' => '用户状态更新成功。',
+    'admin_users_cannot_disable_self' => '你不能停用自己的账号。',
+    
+    'open' => '进入',
 ];
