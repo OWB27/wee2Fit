@@ -33,7 +33,10 @@
                 <tbody>
                     @forelse ($foods as $food)
                         <tr>
-                            <td>{{ $food->name }}</td>
+                            <td>
+                                <div class="font-medium">{{ $food->name }}</div>
+                                <div class="text-sm text-base-content/60">{{ $food->name_zh ?: '-' }}</div>
+                            </td>
                             <td>{{ __('messages.food_category_' . $food->category) }}</td>
                             <td>{{ $food->calories_per_100g }}</td>
                             <td>{{ $food->is_verified ? __('messages.yes') : __('messages.no') }}</td>

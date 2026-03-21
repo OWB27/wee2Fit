@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\App;
 
 class Food extends Model
 {
@@ -22,6 +23,7 @@ class Food extends Model
 
     protected $fillable = [
         'name',
+        'name_zh',
         'category',
         'calories_per_100g',
         'protein_per_100g',
@@ -45,5 +47,14 @@ class Food extends Model
     public function weeklyPlanFoods()
     {
         return $this->hasMany(WeeklyPlanFood::class);
+    }
+
+    public function displayName(): string
+    {
+        if (App::currentLocale() === 'zh_CN' && ! empty($this->name_zh)) {
+            return $this->name_zh;
+        }
+
+        return $this->name;
     }
 }

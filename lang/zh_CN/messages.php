@@ -217,4 +217,7 @@ return [
     'admin_users_cannot_disable_self' => '你不能停用自己的账号。',
     
     'open' => '进入',
+
+    'food_name_en' => '食物英文名',
+    'food_name_zh' => '食物中文名',
 ];

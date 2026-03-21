@@ -54,7 +54,7 @@
                                             <div class="space-y-2">
                                                 @forelse ($slots[$dayNumber][$mealType] as $item)
                                                     <div class="rounded-lg border border-base-300 p-2 text-sm">
-                                                        <div class="font-medium">{{ $item->food->name }}</div>
+                                                        <div class="font-medium">{{ $item->food->displayName() }}</div>
                                                         <div class="text-base-content/70">
                                                             {{ $item->amount_g }} g · {{ round($item->calories(), 1) }} kcal
                                                         </div>
@@ -104,7 +104,7 @@
                                                                 <optgroup label="{{ __('messages.food_category_' . $category) }}">
                                                                     @foreach ($groupedFoods as $food)
                                                                         <option value="{{ $food->id }}">
-                                                                            {{ $food->name }}
+                                                                            {{ $food->displayName() }}
                                                                         </option>
                                                                     @endforeach
                                                                 </optgroup>

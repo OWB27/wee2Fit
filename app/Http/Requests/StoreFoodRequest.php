@@ -19,6 +19,7 @@ class StoreFoodRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
+            'name_zh' => ['nullable', 'string', 'max:255'],
             'category' => ['required', Rule::in(Food::CATEGORY_OPTIONS)],
             'calories_per_100g' => ['required', 'numeric', 'min:0', 'max:9999.99'],
             'protein_per_100g' => ['required', 'numeric', 'min:0', 'max:100'],

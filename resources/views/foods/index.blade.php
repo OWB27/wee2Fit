@@ -28,7 +28,7 @@
             @forelse ($foods as $food)
                 <div class="card bg-base-100 shadow">
                     <div class="card-body">
-                        <h2 class="card-title">{{ $food->name }}</h2>
+                        <h2 class="card-title">{{ $food->displayName() }}</h2>
                         <p class="text-sm text-base-content/70">
                             {{ __('messages.food_category_' . $food->category) }}
                         </p>

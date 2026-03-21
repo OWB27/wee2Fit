@@ -217,4 +217,7 @@ return [
     'admin_users_cannot_disable_self' => 'You cannot disable your own account.',
     
     'open' => 'Open',
+
+    'food_name_en' => 'Food Name (English)',
+    'food_name_zh' => 'Food Name (Chinese)',
 ];

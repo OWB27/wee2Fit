@@ -4,7 +4,7 @@
     <div class="max-w-3xl mx-auto">
         <div class="card bg-base-100 shadow">
             <div class="card-body">
-                <h1 class="card-title text-3xl">{{ $food->name }}</h1>
+                <h1 class="card-title text-3xl">{{ $food->displayName() }}</h1>
 
                 <p class="text-base-content/70">
                     {{ __('messages.food_category_' . $food->category) }}
