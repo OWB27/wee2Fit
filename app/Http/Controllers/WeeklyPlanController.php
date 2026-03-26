@@ -54,6 +54,14 @@ class WeeklyPlanController extends Controller
             ->orderBy('name')
             ->get();
 
+        $foodPickerItems = $foods->map(function ($food) {
+            return [
+                'id' => $food->id,
+                'name' => $food->displayName(),
+                'category' => __('messages.food_category_' . $food->category),
+            ];
+        })->values();
+
         $slots = $this->buildSlots($weeklyPlan);
         $summary = $this->buildWeeklySummary($request, $weeklyPlan);
 
@@ -64,6 +72,7 @@ class WeeklyPlanController extends Controller
             'mealTypeOptions' => WeeklyPlanFood::MEAL_TYPE_OPTIONS,
             'slots' => $slots,
             'summary' => $summary,
+            'foodPickerItems' => $foodPickerItems,
         ]);
     }
 

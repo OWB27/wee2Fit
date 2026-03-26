@@ -220,4 +220,9 @@ return [
 
     'food_name_en' => 'Food Name (English)',
     'food_name_zh' => 'Food Name (Chinese)',
+
+    'food_search_placeholder' => 'Search food by name or category...',
+    'food_no_selection' => 'No food selected',
+    'food_selected_label' => 'Selected',
+    'food_no_results' => 'No matching foods found.',
 ];

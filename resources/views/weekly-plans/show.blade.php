@@ -90,27 +90,39 @@
                                                     <input type="hidden" name="day_of_week" value="{{ $dayNumber }}">
                                                     <input type="hidden" name="meal_type" value="{{ $mealType }}">
 
-                                                    <div>
-                                                        <label class="label" for="food_id_{{ $dayNumber }}_{{ $mealType }}">
+                                                    <div class="space-y-2">
+                                                        <label class="label" for="food_search_{{ $dayNumber }}_{{ $mealType }}">
                                                             <span class="label-text">{{ __('messages.food_name') }}</span>
                                                         </label>
-                                                    
-                                                        <select
+
+                                                        <input
+                                                            type="text"
+                                                            id="food_search_{{ $dayNumber }}_{{ $mealType }}"
+                                                            class="input input-bordered w-full"
+                                                            placeholder="{{ __('messages.food_search_placeholder') }}"
+                                                            autocomplete="off"
+                                                            oninput="filterFoodOptions('{{ $dayNumber }}_{{ $mealType }}')"
+                                                        >
+
+                                                        <input
+                                                            type="hidden"
                                                             name="food_id"
                                                             id="food_id_{{ $dayNumber }}_{{ $mealType }}"
-                                                            class="select select-bordered w-full"
+                                                            value=""
                                                         >
-                                                            @foreach ($foods->groupBy('category') as $category => $groupedFoods)
-                                                                <optgroup label="{{ __('messages.food_category_' . $category) }}">
-                                                                    @foreach ($groupedFoods as $food)
-                                                                        <option value="{{ $food->id }}">
-                                                                            {{ $food->displayName() }}
-                                                                        </option>
-                                                                    @endforeach
-                                                                </optgroup>
-                                                            @endforeach
-                                                        </select>
-                                                    
+
+                                                        <div
+                                                            id="food_selected_{{ $dayNumber }}_{{ $mealType }}"
+                                                            class="text-sm text-base-content/70"
+                                                        >
+                                                            {{ __('messages.food_no_selection') }}
+                                                        </div>
+
+                                                        <div
+                                                            id="food_results_{{ $dayNumber }}_{{ $mealType }}"
+                                                            class="max-h-48 overflow-y-auto rounded-box border border-base-300 bg-base-100"
+                                                        ></div>
+
                                                         @error('food_id')
                                                             <p class="text-error text-sm mt-1">{{ $message }}</p>
                                                         @enderror
@@ -199,4 +211,69 @@
             </div>
         </div>
     </div>
+    <script>
+        const foodPickerItems = @json($foodPickerItems);
+
+        function filterFoodOptions(slotKey) {
+            const searchInput = document.getElementById(`food_search_${slotKey}`);
+            const resultsBox = document.getElementById(`food_results_${slotKey}`);
+            const keyword = searchInput.value.trim().toLowerCase();
+
+            const filtered = foodPickerItems.filter(item => {
+                return item.name.toLowerCase().includes(keyword)
+                    || item.category.toLowerCase().includes(keyword);
+            });
+
+            renderFoodOptions(slotKey, filtered.slice(0, 20));
+        }
+
+        function renderFoodOptions(slotKey, items) {
+            const resultsBox = document.getElementById(`food_results_${slotKey}`);
+            resultsBox.innerHTML = '';
+
+            if (items.length === 0) {
+                resultsBox.innerHTML = `
+                    <div class="p-3 text-sm text-base-content/60">
+                        {{ __('messages.food_no_results') }}
+                    </div>
+                `;
+                return;
+            }
+
+            items.forEach(item => {
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.className = 'w-full text-left px-3 py-2 hover:bg-base-200 border-b border-base-200 last:border-b-0';
+
+                button.innerHTML = `
+                    <div class="font-medium">${escapeHtml(item.name)}</div>
+                    <div class="text-xs text-base-content/60">${escapeHtml(item.category)}</div>
+                `;
+
+                button.addEventListener('click', () => {
+                    selectFoodOption(slotKey, item.id, item.name, item.category);
+                });
+
+                resultsBox.appendChild(button);
+            });
+        }
+
+        function selectFoodOption(slotKey, foodId, foodName, foodCategory) {
+            document.getElementById(`food_id_${slotKey}`).value = foodId;
+            document.getElementById(`food_search_${slotKey}`).value = foodName;
+            document.getElementById(`food_selected_${slotKey}`).textContent =
+                `{{ __('messages.food_selected_label') }}: ${foodName} (${foodCategory})`;
+
+            document.getElementById(`food_results_${slotKey}`).innerHTML = '';
+        }
+
+        function escapeHtml(text) {
+            return String(text)
+                .replaceAll('&', '&amp;')
+                .replaceAll('<', '&lt;')
+                .replaceAll('>', '&gt;')
+                .replaceAll('"', '&quot;')
+                .replaceAll("'", '&#039;');
+        }
+    </script>
 @endsection

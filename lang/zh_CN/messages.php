@@ -220,4 +220,9 @@ return [
 
     'food_name_en' => '食物英文名',
     'food_name_zh' => '食物中文名',
+
+    'food_search_placeholder' => '按食物名称或分类搜索...',
+    'food_no_selection' => '尚未选择食物',
+    'food_selected_label' => '已选择',
+    'food_no_results' => '没有找到匹配的食物。',
 ];
