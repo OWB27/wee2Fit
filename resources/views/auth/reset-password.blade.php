@@ -1,5 +1,5 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route('password.store') }}">
+    <form method="POST" action="{{ route('password.store') }}" class="space-y-5">
         @csrf
 
         <!-- Password Reset Token -->
@@ -30,8 +30,8 @@
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
 
-        <div class="flex items-center justify-end mt-4">
-            <x-primary-button>
+        <div class="flex justify-end pt-2">
+            <x-primary-button class="w-full sm:w-auto">
                 {{ __('Reset Password') }}
             </x-primary-button>
         </div>

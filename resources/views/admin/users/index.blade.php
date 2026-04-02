@@ -1,74 +1,85 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="space-y-6">
-        <div>
-            <h1 class="text-3xl font-bold">{{ __('messages.admin_users_title') }}</h1>
-            <p class="text-base-content/70">{{ __('messages.admin_users_description') }}</p>
-        </div>
+    <div class="page-stack">
+        <section class="page-header">
+            <div>
+                <p class="page-kicker">{{ __('messages.app_name') }}</p>
+                <h1 class="page-title mt-2">{{ __('messages.admin_users_title') }}</h1>
+                <p class="page-description mt-3">{{ __('messages.admin_users_description') }}</p>
+            </div>
+        </section>
 
-        <div class="overflow-x-auto bg-base-100 shadow rounded-box">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>{{ __('messages.admin_users_name') }}</th>
-                        <th>{{ __('messages.admin_users_email') }}</th>
-                        <th>{{ __('messages.admin_users_role') }}</th>
-                        <th>{{ __('messages.admin_users_status') }}</th>
-                        <th>{{ __('messages.actions') }}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse ($users as $user)
-                        <tr>
-                            <td>{{ $user->id }}</td>
-                            <td>{{ $user->name }}</td>
-                            <td>{{ $user->email }}</td>
-                            <td>
-                                @if ($user->isAdmin())
-                                    <span class="badge badge-primary">{{ __('messages.admin_users_role_admin') }}</span>
-                                @else
-                                    <span class="badge badge-outline">{{ __('messages.admin_users_role_user') }}</span>
-                                @endif
-                            </td>
-                            <td>
-                                @if ($user->isActive())
-                                    <span class="badge badge-success">{{ __('messages.admin_users_status_active') }}</span>
-                                @else
-                                    <span class="badge badge-error">{{ __('messages.admin_users_status_inactive') }}</span>
-                                @endif
-                            </td>
-                            <td>
-                                @if (auth()->id() === $user->id)
-                                    <span class="text-sm text-base-content/60">
-                                        {{ __('messages.admin_users_current_you') }}
-                                    </span>
-                                @else
-                                    <form action="{{ route('admin.users.toggle-active', $user) }}" method="POST">
-                                        @csrf
-                                        @method('PATCH')
-
-                                        @if ($user->isActive())
-                                            <button type="submit" class="btn btn-sm btn-error">
-                                                {{ __('messages.admin_users_disable') }}
-                                            </button>
+        @if ($users->isEmpty())
+            <section class="empty-state-card">
+                <div class="empty-state-icon">AU</div>
+                <h2 class="mt-4 text-lg font-semibold text-slate-900">{{ __('messages.admin_users_empty') }}</h2>
+                <p class="mx-auto mt-2 max-w-xl text-sm leading-6 text-slate-600">
+                    {{ __('messages.admin_users_description') }}
+                </p>
+            </section>
+        @else
+            <section class="section-card p-0 overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="table">
+                        <thead>
+                            <tr class="text-slate-500">
+                                <th>ID</th>
+                                <th>{{ __('messages.admin_users_name') }}</th>
+                                <th>{{ __('messages.admin_users_email') }}</th>
+                                <th>{{ __('messages.admin_users_role') }}</th>
+                                <th>{{ __('messages.admin_users_status') }}</th>
+                                <th>{{ __('messages.actions') }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($users as $user)
+                                <tr class="hover">
+                                    <td>{{ $user->id }}</td>
+                                    <td class="font-medium text-slate-900">{{ $user->name }}</td>
+                                    <td>{{ $user->email }}</td>
+                                    <td>
+                                        @if ($user->isAdmin())
+                                            <span class="badge badge-primary rounded-full">{{ __('messages.admin_users_role_admin') }}</span>
                                         @else
-                                            <button type="submit" class="btn btn-sm btn-success">
-                                                {{ __('messages.admin_users_enable') }}
-                                            </button>
+                                            <span class="badge badge-outline rounded-full text-slate-600">{{ __('messages.admin_users_role_user') }}</span>
                                         @endif
-                                    </form>
-                                @endif
-                            </td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="6">{{ __('messages.admin_users_empty') }}</td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
+                                    </td>
+                                    <td>
+                                        @if ($user->isActive())
+                                            <span class="badge badge-success rounded-full">{{ __('messages.admin_users_status_active') }}</span>
+                                        @else
+                                            <span class="badge badge-error rounded-full">{{ __('messages.admin_users_status_inactive') }}</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if (auth()->id() === $user->id)
+                                            <span class="text-sm text-slate-500">
+                                                {{ __('messages.admin_users_current_you') }}
+                                            </span>
+                                        @else
+                                            <form action="{{ route('admin.users.toggle-active', $user) }}" method="POST">
+                                                @csrf
+                                                @method('PATCH')
+
+                                                @if ($user->isActive())
+                                                    <button type="submit" class="btn btn-error btn-sm rounded-full border-0 normal-case">
+                                                        {{ __('messages.admin_users_disable') }}
+                                                    </button>
+                                                @else
+                                                    <button type="submit" class="btn btn-success btn-sm rounded-full border-0 normal-case">
+                                                        {{ __('messages.admin_users_enable') }}
+                                                    </button>
+                                                @endif
+                                            </form>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        @endif
     </div>
 @endsection

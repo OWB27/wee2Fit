@@ -1,3 +1,81 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    :root {
+        --app-bg: 248 250 248;
+        --app-surface: 255 255 255;
+        --app-primary: 22 163 74;
+        --app-primary-dark: 21 128 61;
+    }
+
+    html {
+        background-color: rgb(var(--app-bg));
+    }
+
+    body {
+        @apply min-h-screen text-slate-900 antialiased;
+        background:
+            radial-gradient(circle at top, rgba(220, 252, 231, 0.9), transparent 32%),
+            linear-gradient(180deg, rgba(248, 250, 248, 1) 0%, rgba(250, 250, 249, 1) 100%);
+    }
+
+    [x-cloak] {
+        display: none !important;
+    }
+}
+
+@layer components {
+    .page-shell {
+        @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8;
+    }
+
+    .page-stack {
+        @apply space-y-8;
+    }
+
+    .page-header {
+        @apply flex flex-col gap-3 md:flex-row md:items-end md:justify-between;
+    }
+
+    .page-kicker {
+        @apply text-xs font-semibold uppercase tracking-[0.24em] text-green-700;
+    }
+
+    .page-title {
+        @apply text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl;
+    }
+
+    .page-description {
+        @apply max-w-2xl text-sm leading-6 text-slate-600 sm:text-base;
+    }
+
+    .surface-card {
+        @apply rounded-3xl border border-slate-200 bg-white shadow-sm;
+    }
+
+    .surface-card-soft {
+        @apply rounded-3xl border border-green-100 bg-green-50 shadow-sm;
+    }
+
+    .section-card {
+        @apply rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8;
+    }
+
+    .empty-state-card {
+        @apply rounded-3xl border border-dashed border-slate-200 bg-slate-50 p-8 text-center sm:p-10;
+    }
+
+    .empty-state-icon {
+        @apply mx-auto inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-green-50 text-sm font-semibold text-green-700 shadow-sm;
+    }
+
+    .form-select {
+        @apply min-h-11 w-full rounded-2xl border border-slate-200 bg-white px-4 text-sm text-slate-900 shadow-sm transition focus:border-green-600 focus:outline-none focus:ring-4 focus:ring-green-100;
+    }
+
+    .form-textarea {
+        @apply w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 shadow-sm transition focus:border-green-600 focus:outline-none focus:ring-4 focus:ring-green-100;
+    }
+}

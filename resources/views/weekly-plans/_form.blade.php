@@ -1,67 +1,57 @@
 @csrf
 
-<div class="space-y-4">
+<div class="space-y-5">
     <div>
-        <label for="title" class="label">
-            <span class="label-text">{{ __('messages.weekly_plan_title') }}</span>
-        </label>
-        <input
+        <x-input-label for="title" :value="__('messages.weekly_plan_title')" />
+        <x-text-input
             type="text"
             name="title"
             id="title"
-            class="input input-bordered w-full"
-            value="{{ old('title', $weeklyPlan->title ?? '') }}"
-        >
+            :value="old('title', $weeklyPlan->title ?? '')"
+        />
         @error('title')
-            <p class="text-error text-sm mt-1">{{ $message }}</p>
+            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
         @enderror
     </div>
 
     <div>
-        <label for="week_start_date" class="label">
-            <span class="label-text">{{ __('messages.weekly_plan_week_start_date') }}</span>
-        </label>
-        <input
+        <x-input-label for="week_start_date" :value="__('messages.weekly_plan_week_start_date')" />
+        <x-text-input
             type="date"
             name="week_start_date"
             id="week_start_date"
-            class="input input-bordered w-full"
-            value="{{ old('week_start_date', isset($weeklyPlan) && $weeklyPlan->week_start_date ? $weeklyPlan->week_start_date->format('Y-m-d') : '') }}"
-        >
+            :value="old('week_start_date', isset($weeklyPlan) && $weeklyPlan->week_start_date ? $weeklyPlan->week_start_date->format('Y-m-d') : '')"
+        />
         @error('week_start_date')
-            <p class="text-error text-sm mt-1">{{ $message }}</p>
+            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
         @enderror
     </div>
 
     <div>
-        <label for="note" class="label">
-            <span class="label-text">{{ __('messages.weekly_plan_note') }}</span>
-        </label>
+        <x-input-label for="note" :value="__('messages.weekly_plan_note')" />
         <textarea
             name="note"
             id="note"
             rows="4"
-            class="textarea textarea-bordered w-full"
+            class="form-textarea"
         >{{ old('note', $weeklyPlan->note ?? '') }}</textarea>
         @error('note')
-            <p class="text-error text-sm mt-1">{{ $message }}</p>
+            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
         @enderror
     </div>
 
-    <div class="form-control">
-        <label class="label cursor-pointer justify-start gap-3">
-            <input
-                type="checkbox"
-                name="is_finalized"
-                value="1"
-                class="checkbox"
-                @checked(old('is_finalized', $weeklyPlan->is_finalized ?? false))
-            >
-            <span class="label-text">{{ __('messages.weekly_plan_is_finalized') }}</span>
-        </label>
-    </div>
+    <label class="flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-700">
+        <input
+            type="checkbox"
+            name="is_finalized"
+            value="1"
+            class="checkbox checkbox-sm checkbox-primary rounded-md"
+            @checked(old('is_finalized', $weeklyPlan->is_finalized ?? false))
+        >
+        <span>{{ __('messages.weekly_plan_is_finalized') }}</span>
+    </label>
 
-    <button type="submit" class="btn btn-primary">
+    <button type="submit" class="btn btn-primary rounded-full border-0 px-5 normal-case shadow-sm">
         {{ __('messages.save') }}
     </button>
 </div>
