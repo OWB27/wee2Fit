@@ -1,13 +1,11 @@
-name: Laravel CI
+name: Laravel Tests
 
 on:
   push:
-    branches: ["main"]
   pull_request:
-    branches: ["main"]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     steps:
@@ -17,40 +15,25 @@ jobs:
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: "8.5"
+          php-version: "8.2"
           extensions: mbstring, pdo, pdo_sqlite
           coverage: none
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - name: Cache Composer dependencies
+        uses: actions/cache@v4
         with:
-          node-version: "20"
-          cache: "npm"
+          path: vendor
+          key: composer-${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            composer-${{ runner.os }}-
 
       - name: Install PHP dependencies
         run: composer install --no-interaction --prefer-dist --no-progress
 
-      - name: Install frontend dependencies
-        run: npm install
-
-      - name: Prepare environment file
-        run: cp .env.example .env
-
-      - name: Generate application key
-        run: php artisan key:generate
-
-      - name: Create SQLite database
+      - name: Prepare environment
         run: |
-          mkdir -p database
-          touch database/database.sqlite
+          cp .env.example .env
+          php artisan key:generate
 
-      - name: Configure SQLite for CI
-        run: |
-          echo "DB_CONNECTION=sqlite" >> .env
-          echo "DB_DATABASE=$(pwd)/database/database.sqlite" >> .env
-
-      - name: Run migrations
-        run: php artisan migrate --force
-
-      - name: Build frontend assets
-        run: npm run build
+      - name: Run test suite
+        run: php artisan test

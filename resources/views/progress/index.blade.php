@@ -1,18 +1,42 @@
-@extends('layouts.app')
+@extends('layouts.workspace')
 
 @section('content')
-    <div class="page-stack">
-        <section class="page-header">
-            <div>
-                <p class="page-kicker">{{ __('messages.app_name') }}</p>
-                <h1 class="page-title mt-2">{{ __('messages.progress_title') }}</h1>
-                <p class="page-description mt-3">{{ __('messages.progress_description') }}</p>
+    @php
+        $latestMetric = $bodyMetrics->first();
+    @endphp
+
+    <div class="workspace-content-stack">
+        <section>
+            <h1 class="workspace-page-title">{{ __('messages.progress_title') }}</h1>
+            <p class="workspace-page-description">{{ __('messages.progress_description') }}</p>
+        </section>
+
+        <section class="grid gap-4 xl:grid-cols-3">
+            <div class="workspace-stat-card">
+                <div class="workspace-stat-label">{{ __('messages.profile_current_weight_kg') }}</div>
+                <div class="workspace-stat-value">{{ $latestMetric?->weight_kg ?? '-' }}</div>
+                <p class="mt-2 text-sm text-emerald-600">Latest entry</p>
+            </div>
+
+            <div class="workspace-stat-card">
+                <div class="workspace-stat-label">{{ __('messages.progress_body_fat_percentage') }}</div>
+                <div class="workspace-stat-value">{{ $latestMetric?->body_fat_percentage ?? '-' }}</div>
+                <p class="mt-2 text-sm text-emerald-600">{{ __('messages.progress_description') }}</p>
+            </div>
+
+            <div class="workspace-stat-card">
+                <div class="workspace-stat-label">Total Entries</div>
+                <div class="workspace-stat-value">{{ $bodyMetrics->count() }}</div>
+                <p class="mt-2 text-sm text-slate-500">
+                    {{ __('messages.progress_recorded_on') }}:
+                    {{ $latestMetric?->recorded_on?->format('Y-m-d') ?? '-' }}
+                </p>
             </div>
         </section>
 
-        <section class="grid gap-6 lg:grid-cols-2">
-            <div class="section-card">
-                <h2 class="text-lg font-semibold text-slate-900">{{ __('messages.progress_add_metric') }}</h2>
+        <section class="grid gap-4 xl:grid-cols-[360px,minmax(0,1fr)]">
+            <div class="workspace-card">
+                <h2 class="text-xl font-semibold text-slate-900">{{ __('messages.progress_add_metric') }}</h2>
 
                 <form action="{{ route('progress.store') }}" method="POST" class="mt-6 space-y-5">
                     @csrf
@@ -64,19 +88,34 @@
                             name="note"
                             id="note"
                             rows="4"
-                            class="textarea textarea-bordered min-h-28 w-full rounded-2xl border-slate-200 bg-white text-sm text-slate-900 shadow-sm transition focus:border-green-600 focus:outline-none focus:ring-4 focus:ring-green-100"
+                            class="form-textarea min-h-28"
                         >{{ old('note') }}</textarea>
                         @error('note')
                             <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>
 
-                    <x-primary-button>{{ __('messages.progress_save_metric') }}</x-primary-button>
+                    <x-primary-button class="w-full justify-center">{{ __('messages.progress_save_metric') }}</x-primary-button>
                 </form>
+
+                <div class="mt-6 rounded-[1.5rem] border border-emerald-100 bg-emerald-50 px-4 py-4 text-sm leading-6 text-emerald-800">
+                    Tip: Log measurements at a consistent time of day for cleaner trend lines.
+                </div>
             </div>
 
-            <div class="section-card">
-                <h2 class="text-lg font-semibold text-slate-900">{{ __('messages.progress_weight_trend') }}</h2>
+            <div class="workspace-card">
+                <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+                    <div>
+                        <h2 class="text-xl font-semibold text-slate-900">{{ __('messages.progress_weight_trend') }}</h2>
+                        <p class="mt-2 text-sm leading-6 text-slate-600">{{ __('messages.progress_description') }}</p>
+                    </div>
+
+                    <div class="inline-flex rounded-full border border-slate-200 bg-white p-1 text-xs font-medium text-slate-500 shadow-sm">
+                        <span class="rounded-full bg-slate-100 px-3 py-1">7 days</span>
+                        <span class="px-3 py-1">30 days</span>
+                        <span class="px-3 py-1">90 days</span>
+                    </div>
+                </div>
 
                 @if ($chartLabels->isEmpty())
                     <div class="empty-state-card mt-6">
@@ -87,15 +126,22 @@
                         </p>
                     </div>
                 @else
-                    <div class="mt-6 h-80 w-full">
-                        <canvas id="weightChart"></canvas>
+                    <div class="mt-6 rounded-[1.5rem] border border-slate-200 bg-slate-50 p-4">
+                        <div class="h-[420px] w-full">
+                            <canvas id="weightChart"></canvas>
+                        </div>
                     </div>
                 @endif
             </div>
         </section>
 
-        <section class="section-card">
-            <h2 class="text-lg font-semibold text-slate-900">{{ __('messages.progress_history') }}</h2>
+        <section class="workspace-card">
+            <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+                <div>
+                    <h2 class="text-xl font-semibold text-slate-900">{{ __('messages.progress_history') }}</h2>
+                    <p class="mt-2 text-sm leading-6 text-slate-600">{{ __('messages.progress_description') }}</p>
+                </div>
+            </div>
 
             @if ($bodyMetrics->isEmpty())
                 <div class="empty-state-card mt-6">
@@ -106,7 +152,7 @@
                     </p>
                 </div>
             @else
-                <div class="mt-6 overflow-x-auto rounded-3xl border border-slate-200">
+                <div class="workspace-table-shell mt-6">
                     <table class="table">
                         <thead>
                             <tr class="text-slate-500">
@@ -154,15 +200,34 @@
                     datasets: [{
                         label: @json(__('messages.profile_current_weight_kg')),
                         data: @json($chartWeights),
-                        tension: 0.2,
-                        borderColor: '#16a34a',
-                        backgroundColor: 'rgba(22, 163, 74, 0.12)',
-                        fill: true
+                        tension: 0.24,
+                        borderColor: '#3576f6',
+                        backgroundColor: 'rgba(53, 118, 246, 0.08)',
+                        pointRadius: 2,
+                        pointHoverRadius: 4,
+                        fill: false
                     }]
                 },
                 options: {
                     responsive: true,
-                    maintainAspectRatio: false
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                color: 'rgba(148, 163, 184, 0.12)'
+                            }
+                        },
+                        y: {
+                            grid: {
+                                color: 'rgba(148, 163, 184, 0.12)'
+                            }
+                        }
+                    }
                 }
             });
         </script>

@@ -1,74 +1,164 @@
-@extends('layouts.app')
+@extends('layouts.workspace')
 
 @section('content')
-    <div class="mx-auto max-w-5xl page-stack">
-        <section class="surface-card overflow-hidden">
-            <div class="grid gap-8 p-6 sm:p-8 lg:grid-cols-[1.1fr,0.9fr] lg:p-10">
+    <div class="workspace-content-stack">
+        <section>
+            <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
                 <div>
-                    <p class="page-kicker">{{ __('messages.app_name') }}</p>
-                    <h1 class="page-title mt-3">{{ __('messages.plan_current_title') }}</h1>
-                    <p class="page-description mt-4">{{ __('messages.dashboard_plan_text') }}</p>
+                    <h1 class="workspace-page-title">{{ __('messages.plan_current_title') }}</h1>
+                    <p class="workspace-page-description">Your active nutrition plan.</p>
                 </div>
 
-                <div class="surface-card-soft p-6">
-                    <h2 class="text-sm font-semibold uppercase tracking-[0.2em] text-green-700">{{ __('messages.plan_target_calories') }}</h2>
-                    <div class="mt-4 text-4xl font-semibold tracking-tight text-slate-900">{{ $plan->target_calories }}</div>
-                    <p class="mt-2 text-sm leading-6 text-slate-600">
-                        {{ __('messages.plan_goal') }}: {{ __('messages.goal_' . $plan->goal) }}
-                    </p>
+                <div class="flex flex-wrap gap-3">
+                    <a href="{{ route('my-profile.edit') }}" class="btn btn-outline rounded-full border-slate-200 px-5 normal-case text-slate-700 hover:border-slate-300 hover:bg-slate-50">
+                        {{ __('messages.edit') }} {{ __('messages.nav_my_profile') }}
+                    </a>
+                    <a href="{{ route('plans.create') }}" class="btn btn-primary rounded-full border-0 px-5 normal-case shadow-sm">
+                        {{ __('messages.plan_regenerate_button') }}
+                    </a>
                 </div>
             </div>
         </section>
 
-        <section class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-            <div class="section-card">
-                <div class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">{{ __('messages.plan_bmr') }}</div>
-                <div class="mt-3 text-3xl font-semibold tracking-tight text-green-700">{{ $plan->bmr }}</div>
-            </div>
-
-            <div class="section-card">
-                <div class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">{{ __('messages.plan_tdee') }}</div>
-                <div class="mt-3 text-3xl font-semibold tracking-tight text-green-700">{{ $plan->tdee }}</div>
-            </div>
-
-            <div class="section-card">
-                <div class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">{{ __('messages.plan_target_calories') }}</div>
-                <div class="mt-3 text-3xl font-semibold tracking-tight text-slate-900">{{ $plan->target_calories }}</div>
-            </div>
-
-            <div class="section-card">
-                <div class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">{{ __('messages.plan_goal') }}</div>
-                <div class="mt-3 text-xl font-semibold tracking-tight text-slate-900">{{ __('messages.goal_' . $plan->goal) }}</div>
-            </div>
-        </section>
-
-        <section class="grid gap-4 md:grid-cols-3">
-            <div class="surface-card-soft p-6">
-                <h2 class="text-lg font-semibold text-slate-900">{{ __('messages.plan_protein') }}</h2>
-                <p class="mt-3 text-3xl font-semibold tracking-tight text-slate-900">{{ $plan->protein_g }} g</p>
-            </div>
-
-            <div class="section-card">
-                <h2 class="text-lg font-semibold text-slate-900">{{ __('messages.plan_carbs') }}</h2>
-                <p class="mt-3 text-3xl font-semibold tracking-tight text-slate-900">{{ $plan->carbs_g }} g</p>
-            </div>
-
-            <div class="section-card">
-                <h2 class="text-lg font-semibold text-slate-900">{{ __('messages.plan_fat') }}</h2>
-                <p class="mt-3 text-3xl font-semibold tracking-tight text-slate-900">{{ $plan->fat_g }} g</p>
-            </div>
-        </section>
-
-        <section class="section-card">
-            <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <section class="workspace-soft-card">
+            <div class="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
                 <div>
-                    <h2 class="text-lg font-semibold text-slate-900">{{ __('messages.plan_regenerate_button') }}</h2>
-                    <p class="mt-2 text-sm leading-6 text-slate-600">{{ __('messages.plan_generate_description') }}</p>
+                    <div class="workspace-chip">{{ __('messages.plan_goal') }}: {{ __('messages.goal_' . $plan->goal) }}</div>
+                    <div class="mt-3 text-sm leading-6 text-slate-600">{{ __('messages.plan_generated_success') }}</div>
                 </div>
 
-                <a href="{{ route('plans.create') }}" class="btn btn-outline rounded-full border-slate-200 px-5 normal-case text-slate-700 hover:border-green-200 hover:bg-green-50">
-                    {{ __('messages.plan_regenerate_button') }}
-                </a>
+                <div class="text-sm text-slate-500">
+                    {{ __('messages.profile_activity_level') }}: {{ __('messages.activity_' . $plan->activity_level) }}
+                </div>
+            </div>
+        </section>
+
+        <section class="grid gap-4 xl:grid-cols-4">
+            <div class="workspace-stat-card">
+                <div class="workspace-stat-label">{{ __('messages.plan_bmr') }}</div>
+                <div class="workspace-stat-value">{{ $plan->bmr }}</div>
+                <p class="mt-2 text-sm text-slate-600">kcal / day at rest</p>
+            </div>
+
+            <div class="workspace-stat-card">
+                <div class="workspace-stat-label">{{ __('messages.profile_activity_level') }}</div>
+                <div class="workspace-stat-value text-3xl">{{ __('messages.activity_' . $plan->activity_level) }}</div>
+                <p class="mt-2 text-sm text-slate-600">{{ __('messages.plan_tdee') }}</p>
+            </div>
+
+            <div class="workspace-stat-card">
+                <div class="workspace-stat-label">{{ __('messages.plan_tdee') }}</div>
+                <div class="workspace-stat-value">{{ $plan->tdee }}</div>
+                <p class="mt-2 text-sm text-slate-600">Estimated daily expenditure</p>
+            </div>
+
+            <div class="workspace-soft-card">
+                <div class="workspace-stat-label">{{ __('messages.plan_target_calories') }}</div>
+                <div class="workspace-stat-value text-green-700">{{ $plan->target_calories }}</div>
+                <p class="mt-2 text-sm text-slate-600">{{ __('messages.intensity_' . $plan->intensity) }}</p>
+            </div>
+        </section>
+
+        <section class="workspace-card">
+            <h2 class="text-xl font-semibold text-slate-900">Macro Targets</h2>
+            <p class="mt-2 text-sm leading-6 text-slate-600">Daily macronutrient distribution based on your current goal.</p>
+
+            <div class="mt-6 grid gap-6 md:grid-cols-3">
+                <div>
+                    <div class="flex items-center justify-between">
+                        <span class="font-medium text-slate-900">{{ __('messages.plan_protein') }}</span>
+                        <span class="text-sm text-slate-500">{{ $plan->protein_g }} g</span>
+                    </div>
+                    <div class="workspace-progress-track">
+                        <div class="h-2 rounded-full bg-rose-500 w-4/5"></div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="flex items-center justify-between">
+                        <span class="font-medium text-slate-900">{{ __('messages.plan_carbs') }}</span>
+                        <span class="text-sm text-slate-500">{{ $plan->carbs_g }} g</span>
+                    </div>
+                    <div class="workspace-progress-track">
+                        <div class="h-2 rounded-full bg-amber-400 w-3/4"></div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="flex items-center justify-between">
+                        <span class="font-medium text-slate-900">{{ __('messages.plan_fat') }}</span>
+                        <span class="text-sm text-slate-500">{{ $plan->fat_g }} g</span>
+                    </div>
+                    <div class="workspace-progress-track">
+                        <div class="h-2 rounded-full bg-sky-500 w-2/5"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="grid gap-4 xl:grid-cols-[minmax(0,1.4fr),minmax(0,1fr)]">
+            <div class="workspace-card">
+                <div class="flex items-center justify-between">
+                    <h2 class="text-xl font-semibold text-slate-900">Profile Used for Calculation</h2>
+                    <a href="{{ route('my-profile.edit') }}" class="text-sm font-medium text-green-700 hover:text-green-800">Update Profile</a>
+                </div>
+
+                <div class="mt-6 grid gap-4 sm:grid-cols-4">
+                    <div>
+                        <div class="workspace-stat-label">{{ __('messages.profile_sex') }}</div>
+                        <div class="mt-2 text-lg font-semibold text-slate-900">{{ __('messages.sex_' . $plan->sex) }}</div>
+                    </div>
+                    <div>
+                        <div class="workspace-stat-label">Age</div>
+                        <div class="mt-2 text-lg font-semibold text-slate-900">{{ $plan->age }}</div>
+                    </div>
+                    <div>
+                        <div class="workspace-stat-label">{{ __('messages.profile_height_cm') }}</div>
+                        <div class="mt-2 text-lg font-semibold text-slate-900">{{ $plan->height_cm }}</div>
+                    </div>
+                    <div>
+                        <div class="workspace-stat-label">{{ __('messages.profile_current_weight_kg') }}</div>
+                        <div class="mt-2 text-lg font-semibold text-slate-900">{{ $plan->weight_kg }}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="workspace-card">
+                <h2 class="text-xl font-semibold text-slate-900">How This Plan Was Calculated</h2>
+                <div class="mt-5 space-y-3">
+                    <details class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3" open>
+                        <summary class="cursor-pointer font-medium text-slate-900">Step 1: {{ __('messages.plan_bmr') }}</summary>
+                        <p class="mt-3 text-sm leading-6 text-slate-600">Baseline calories are estimated from your age, sex, height, and weight.</p>
+                    </details>
+
+                    <details class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3">
+                        <summary class="cursor-pointer font-medium text-slate-900">Step 2: {{ __('messages.plan_tdee') }}</summary>
+                        <p class="mt-3 text-sm leading-6 text-slate-600">Your activity level is used to estimate total daily energy expenditure.</p>
+                    </details>
+
+                    <details class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3">
+                        <summary class="cursor-pointer font-medium text-slate-900">Step 3: {{ __('messages.plan_target_calories') }}</summary>
+                        <p class="mt-3 text-sm leading-6 text-slate-600">Goal and intensity adjust the target calories above or below TDEE.</p>
+                    </details>
+                </div>
+            </div>
+        </section>
+
+        <section class="workspace-card">
+            <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+                <div>
+                    <h2 class="text-xl font-semibold text-slate-900">Ready to start planning your meals?</h2>
+                    <p class="mt-2 text-sm leading-6 text-slate-600">Use these targets to create your weekly meal plan.</p>
+                </div>
+
+                <div class="flex flex-wrap gap-3">
+                    <a href="{{ route('weekly-plans.index') }}" class="btn btn-outline rounded-full border-slate-200 px-5 normal-case text-slate-700 hover:border-slate-300 hover:bg-slate-50">
+                        {{ __('messages.weekly_plan_open_planner') }}
+                    </a>
+                    <a href="{{ route('weekly-plans.create') }}" class="btn btn-primary rounded-full border-0 px-5 normal-case shadow-sm">
+                        {{ __('messages.weekly_plan_create') }}
+                    </a>
+                </div>
             </div>
         </section>
     </div>

@@ -61,22 +61,22 @@
                         </div>
 
                         <div class="flex flex-wrap gap-3">
-                            <span class="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm text-slate-700 shadow-sm">
+                            <span class="public-auth-stat">
                                 {{ __('messages.my_profile_title') }}
                             </span>
-                            <span class="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm text-slate-700 shadow-sm">
+                            <span class="public-auth-stat">
                                 {{ __('messages.plan_current_title') }}
                             </span>
-                            <span class="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm text-slate-700 shadow-sm">
+                            <span class="public-auth-stat">
                                 {{ __('messages.progress_title') }}
                             </span>
-                            <span class="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm text-slate-700 shadow-sm">
+                            <span class="public-auth-stat">
                                 {{ __('messages.weekly_plans_title') }}
                             </span>
                         </div>
                     </div>
 
-                    <div class="surface-card p-6 sm:p-8 lg:p-10">
+                    <div class="public-auth-panel">
                         <div class="mb-6 flex flex-wrap gap-2">
                             <a
                                 href="{{ route('login') }}"

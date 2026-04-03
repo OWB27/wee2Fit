@@ -21,6 +21,12 @@
             linear-gradient(180deg, rgba(248, 250, 248, 1) 0%, rgba(250, 250, 249, 1) 100%);
     }
 
+    body.workspace-body {
+        background:
+            radial-gradient(circle at top left, rgba(230, 247, 240, 0.9), transparent 26%),
+            linear-gradient(180deg, rgb(247, 247, 244) 0%, rgb(244, 245, 241) 100%);
+    }
+
     [x-cloak] {
         display: none !important;
     }
@@ -61,6 +67,218 @@
 
     .section-card {
         @apply rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8;
+    }
+
+    .workspace-root {
+        @apply min-h-screen;
+    }
+
+    .workspace-shell {
+        @apply mx-auto w-full max-w-[1600px] lg:grid lg:grid-cols-[240px,minmax(0,1fr)];
+    }
+
+    .workspace-sidebar {
+        @apply border-b border-slate-200 bg-white/85 px-4 py-5 backdrop-blur lg:min-h-screen lg:border-b-0 lg:border-r lg:px-5 lg:py-6;
+    }
+
+    .workspace-sidebar-panel {
+        @apply flex flex-col gap-6 lg:sticky lg:top-0 lg:min-h-[calc(100vh-3rem)];
+    }
+
+    .workspace-brand {
+        @apply inline-flex items-center gap-3 rounded-2xl text-lg font-semibold text-slate-900;
+    }
+
+    .workspace-brand-mark {
+        @apply inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-green-600 text-base font-semibold text-white shadow-sm;
+    }
+
+    .workspace-section-label {
+        @apply text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400;
+    }
+
+    .workspace-nav {
+        @apply space-y-2;
+    }
+
+    .workspace-nav-link {
+        @apply flex items-center gap-3 rounded-2xl px-3 py-2.5 text-sm font-medium text-slate-600 transition;
+    }
+
+    .workspace-nav-link-active {
+        @apply bg-green-600 text-white shadow-sm;
+    }
+
+    .workspace-nav-link-idle {
+        @apply hover:bg-slate-100 hover:text-slate-900;
+    }
+
+    .workspace-goal-card {
+        @apply mt-auto rounded-[1.75rem] border border-slate-200 bg-slate-50 p-4 shadow-sm;
+    }
+
+    .workspace-main {
+        @apply min-w-0;
+    }
+
+    .workspace-topbar {
+        @apply border-b border-slate-200 bg-white/80 px-4 py-4 backdrop-blur sm:px-6 lg:px-8;
+    }
+
+    .workspace-topbar-shell {
+        @apply flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between;
+    }
+
+    .workspace-search {
+        @apply flex min-h-11 items-center gap-3 rounded-2xl border border-slate-200 bg-white px-4 text-sm text-slate-500 shadow-sm;
+    }
+
+    .workspace-main-shell {
+        @apply px-4 py-6 sm:px-6 lg:px-8 lg:py-8;
+    }
+
+    .workspace-content-stack {
+        @apply space-y-6;
+    }
+
+    .workspace-page-title {
+        @apply text-3xl font-semibold tracking-tight text-slate-900;
+    }
+
+    .workspace-page-description {
+        @apply mt-2 text-sm leading-6 text-slate-600;
+    }
+
+    .workspace-card {
+        @apply rounded-[1.75rem] border border-slate-200 bg-white p-5 shadow-sm;
+    }
+
+    .workspace-soft-card {
+        @apply rounded-[1.75rem] border border-emerald-100 bg-emerald-50/80 p-5 shadow-sm;
+    }
+
+    .workspace-stat-card {
+        @apply rounded-[1.5rem] border border-slate-200 bg-white p-5 shadow-sm;
+    }
+
+    .workspace-stat-label {
+        @apply text-sm font-medium text-slate-500;
+    }
+
+    .workspace-stat-value {
+        @apply mt-3 text-4xl font-semibold tracking-tight text-slate-900;
+    }
+
+    .workspace-progress-track {
+        @apply mt-4 h-2 rounded-full bg-slate-100;
+    }
+
+    .workspace-progress-fill {
+        @apply h-2 rounded-full bg-green-600;
+    }
+
+    .workspace-chip {
+        @apply inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-600;
+    }
+
+    .workspace-table-shell {
+        @apply overflow-x-auto rounded-[1.75rem] border border-slate-200 bg-white shadow-sm;
+    }
+
+    .workspace-filter-shell {
+        @apply rounded-[1.75rem] border border-slate-200 bg-white p-4 shadow-sm;
+    }
+
+    .workspace-field-shell {
+        @apply rounded-3xl border border-slate-200 bg-white p-6 shadow-sm;
+    }
+
+    .workspace-helper-card {
+        @apply rounded-3xl border border-slate-200 bg-slate-50 p-4;
+    }
+
+    .workspace-info-list {
+        @apply space-y-3 text-sm text-slate-600;
+    }
+
+    .workspace-info-list strong {
+        @apply font-semibold text-slate-900;
+    }
+
+    .planner-board {
+        @apply overflow-x-auto pb-2;
+    }
+
+    .planner-board-grid {
+        @apply grid min-w-[980px] gap-4 xl:min-w-0 xl:grid-cols-7;
+    }
+
+    .planner-day-column {
+        @apply space-y-4;
+    }
+
+    .planner-day-header {
+        @apply rounded-[1.5rem] border border-slate-200 bg-slate-50 p-4;
+    }
+
+    .planner-meal-card {
+        @apply rounded-[1.5rem] border border-slate-200 bg-white p-4 shadow-sm;
+    }
+
+    .planner-food-card {
+        @apply rounded-2xl border border-slate-200 bg-slate-50 p-3;
+    }
+
+    .planner-empty-slot {
+        @apply rounded-2xl border border-dashed border-slate-200 bg-slate-50 p-4 text-sm text-slate-500;
+    }
+
+    .workspace-preview-metric {
+        @apply rounded-3xl border border-slate-200 bg-white p-4 shadow-sm;
+    }
+
+    .public-hero {
+        @apply overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-sm;
+    }
+
+    .public-hero-grid {
+        @apply grid gap-8 p-6 sm:p-8 lg:grid-cols-[1.1fr,0.9fr] lg:p-10;
+    }
+
+    .public-soft-panel {
+        @apply rounded-[1.75rem] border border-emerald-100 bg-emerald-50/80 p-6 shadow-sm;
+    }
+
+    .public-stat-card {
+        @apply rounded-[1.5rem] border border-slate-200 bg-white p-5 shadow-sm;
+    }
+
+    .public-section-card {
+        @apply rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-sm sm:p-7;
+    }
+
+    .public-feature-card {
+        @apply rounded-[1.5rem] border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md;
+    }
+
+    .public-food-card {
+        @apply rounded-[1.75rem] border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md;
+    }
+
+    .public-icon-badge {
+        @apply inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-100 text-sm font-semibold text-emerald-700 shadow-sm;
+    }
+
+    .public-filter-shell {
+        @apply rounded-[1.75rem] border border-slate-200 bg-white p-4 shadow-sm;
+    }
+
+    .public-auth-panel {
+        @apply rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm sm:p-8 lg:p-10;
+    }
+
+    .public-auth-stat {
+        @apply rounded-3xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 shadow-sm;
     }
 
     .empty-state-card {
