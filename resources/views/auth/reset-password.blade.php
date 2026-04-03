@@ -7,21 +7,21 @@
 
         <!-- Email Address -->
         <div>
-            <x-input-label for="email" :value="__('Email')" />
+            <x-input-label for="email" :value="app()->getLocale() === 'zh_CN' ? '邮箱' : 'Email'" />
             <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email', $request->email)" required autofocus autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
         <!-- Password -->
         <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+            <x-input-label for="password" :value="app()->getLocale() === 'zh_CN' ? '密码' : 'Password'" />
             <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
         <!-- Confirm Password -->
         <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
+            <x-input-label for="password_confirmation" :value="app()->getLocale() === 'zh_CN' ? '确认密码' : 'Confirm Password'" />
 
             <x-text-input id="password_confirmation" class="block mt-1 w-full"
                                 type="password"
@@ -32,7 +32,7 @@
 
         <div class="flex justify-end pt-2">
             <x-primary-button class="w-full sm:w-auto">
-                {{ __('Reset Password') }}
+                {{ app()->getLocale() === 'zh_CN' ? '重置密码' : 'Reset Password' }}
             </x-primary-button>
         </div>
     </form>

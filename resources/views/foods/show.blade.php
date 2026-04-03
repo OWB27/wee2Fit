@@ -12,11 +12,11 @@
                     @if ($food->name !== $food->displayName() || $food->name_zh)
                         <div class="mt-4 flex flex-wrap gap-2">
                             <span class="workspace-chip">
-                                EN: {{ $food->name }}
+                                {{ __('messages.food_name_en') }}: {{ $food->name }}
                             </span>
                             @if ($food->name_zh)
                                 <span class="workspace-chip">
-                                    ZH: {{ $food->name_zh }}
+                                    {{ __('messages.food_name_zh') }}: {{ $food->name_zh }}
                                 </span>
                             @endif
                         </div>

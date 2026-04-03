@@ -86,7 +86,7 @@
                             <x-input-label for="birth_date" :value="__('messages.profile_birth_date')" />
                             <x-text-input type="date" name="birth_date" id="birth_date" :value="$birthDateValue" />
                             <p class="mt-2 text-xs text-slate-500">
-                                {{ $age ? 'Age: ' . $age : __('messages.plan_generate_description') }}
+                                {{ $age ? (app()->getLocale() === 'zh_CN' ? '年龄: ' . $age : 'Age: ' . $age) : __('messages.plan_generate_description') }}
                             </p>
                             @error('birth_date')
                                 <p class="mt-2 text-sm text-red-600">{{ $message }}</p>

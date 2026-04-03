@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
@@ -11,9 +11,18 @@
     @php
         $user = auth()->user();
         $goal = $user?->profile?->goal;
+        $accountLinks = [
+            ['route' => 'dashboard', 'label' => __('messages.nav_dashboard'), 'active' => 'dashboard'],
+            ['route' => 'my-profile.edit', 'label' => __('messages.nav_my_profile'), 'active' => 'my-profile.*'],
+            ['route' => 'plans.create', 'label' => __('messages.nav_generate_plan'), 'active' => 'plans.create'],
+            ['route' => 'plans.current', 'label' => __('messages.nav_current_plan'), 'active' => 'plans.current'],
+            ['route' => 'progress.index', 'label' => __('messages.nav_progress'), 'active' => 'progress.*'],
+            ['route' => 'weekly-plans.index', 'label' => __('messages.nav_weekly_plans'), 'active' => 'weekly-plans.*'],
+        ];
+        $accountLabel = app()->getLocale() === 'zh_CN' ? json_decode('"\u4e2a\u4eba\u4e2d\u5fc3"') : 'Account';
         $navGroups = [
             [
-                'label' => 'MAIN',
+                'label' => app()->getLocale() === 'zh_CN' ? json_decode('"\u4e3b\u8981"') : 'Main',
                 'links' => [
                     ['route' => 'dashboard', 'label' => __('messages.nav_dashboard'), 'active' => 'dashboard'],
                     ['route' => 'plans.current', 'label' => __('messages.nav_current_plan'), 'active' => 'plans.current'],
@@ -22,25 +31,26 @@
                 ],
             ],
             [
-                'label' => 'PROGRESS',
+                'label' => app()->getLocale() === 'zh_CN' ? json_decode('"\u8fdb\u5ea6"') : 'Progress',
                 'links' => [
                     ['route' => 'progress.index', 'label' => __('messages.nav_progress'), 'active' => 'progress.*'],
                     ['route' => 'my-profile.edit', 'label' => __('messages.nav_my_profile'), 'active' => 'my-profile.*'],
                 ],
             ],
             [
-                'label' => 'RESOURCES',
+                'label' => app()->getLocale() === 'zh_CN' ? json_decode('"\u8d44\u6e90"') : 'Resources',
                 'links' => [
-                    ['route' => 'foods.index', 'label' => __('messages.nav_food_library'), 'active' => 'foods.*'],
                     ['route' => 'methodology', 'label' => __('messages.nav_methodology'), 'active' => 'methodology'],
+                    ['route' => 'foods.index', 'label' => __('messages.nav_food_library'), 'active' => 'foods.*'],
                 ],
             ],
         ];
+        $mobileNavGroups = array_slice($navGroups, 2);
     @endphp
 
-    <div class="workspace-root">
+    <div x-data="{ mobileOpen: false }" class="workspace-root">
         <div class="workspace-shell">
-            <aside class="workspace-sidebar">
+            <aside class="workspace-sidebar hidden lg:block">
                 <div class="workspace-sidebar-panel">
                     <a href="{{ route('home') }}" class="workspace-brand">
                         <span class="workspace-brand-mark">W</span>
@@ -65,7 +75,7 @@
                     @endforeach
 
                     <div class="workspace-goal-card">
-                        <p class="workspace-section-label text-slate-500">CURRENT GOAL</p>
+                        <p class="workspace-section-label text-slate-500">{{ app()->getLocale() === 'zh_CN' ? json_decode('"\u5f53\u524d\u76ee\u6807"') : 'Current Goal' }}</p>
                         <div class="mt-3 text-xl font-semibold text-slate-900">
                             {{ $goal ? __('messages.goal_' . $goal) : __('messages.nav_my_profile') }}
                         </div>
@@ -81,59 +91,190 @@
 
             <div class="workspace-main">
                 <header class="workspace-topbar">
-                    <div class="workspace-topbar-shell">
-                        <div class="workspace-search lg:min-w-[320px] lg:max-w-[420px] lg:flex-1">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M21 21l-4.35-4.35M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" />
-                            </svg>
-                            <span>Search foods, meals...</span>
-                            <span class="ml-auto rounded-lg bg-slate-100 px-2 py-1 text-xs text-slate-400">/</span>
-                        </div>
-
-                        <div class="flex flex-wrap items-center gap-3">
-                            <div class="inline-flex rounded-full border border-slate-200 bg-white p-1 text-xs font-medium text-slate-500 shadow-sm">
-                                <a href="{{ route('locale.switch', 'en') }}" class="rounded-full px-3 py-1 {{ app()->getLocale() === 'en' ? 'bg-green-50 text-green-700' : '' }}">
-                                    EN
-                                </a>
-                                <a href="{{ route('locale.switch', 'zh_CN') }}" class="rounded-full px-3 py-1 {{ app()->getLocale() === 'zh_CN' ? 'bg-green-50 text-green-700' : '' }}">
-                                    中文
+                    <div class="page-shell">
+                        <div class="workspace-topbar-shell">
+                            <div class="flex items-center gap-3">
+                                <a href="{{ route('home') }}" class="workspace-brand lg:hidden">
+                                    <span class="workspace-brand-mark">W</span>
+                                    <span>{{ __('messages.app_name') }}</span>
                                 </a>
                             </div>
 
-                            <div class="flex items-center gap-3 rounded-full border border-slate-200 bg-white px-2 py-1.5 shadow-sm">
-                                <span class="inline-flex h-9 w-9 items-center justify-center rounded-full bg-green-100 text-sm font-semibold text-green-700">
-                                    {{ strtoupper(substr($user->name ?? 'W', 0, 1)) }}
-                                </span>
-                                <div class="hidden pr-2 sm:block">
-                                    <div class="text-sm font-semibold text-slate-900">{{ $user->name ?? __('messages.app_name') }}</div>
-                                    <div class="text-xs text-slate-500">{{ $user->email ?? '' }}</div>
+                            <div class="hidden flex-wrap items-center gap-3 lg:flex">
+                                <div class="dropdown dropdown-end">
+                                    <label tabindex="0" class="btn btn-ghost btn-sm rounded-full normal-case text-slate-600 hover:bg-slate-100">
+                                        {{ __('messages.nav_language') }}
+                                    </label>
+
+                                    <ul tabindex="0" class="menu dropdown-content z-[1] mt-2 w-40 rounded-2xl border border-slate-200 bg-white p-2 shadow-lg">
+                                        <li>
+                                            <a href="{{ route('locale.switch', 'en') }}">
+                                                {{ __('messages.nav_english') }}
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('locale.switch', 'zh_CN') }}">
+                                                {{ json_decode('"\u4e2d\u6587"') }}
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="dropdown dropdown-end">
+                                    <label tabindex="0" class="topbar-user-card cursor-pointer transition hover:border-slate-300 hover:bg-slate-50">
+                                        <span class="topbar-user-avatar">
+                                            {{ strtoupper(substr($user->name ?? 'W', 0, 1)) }}
+                                        </span>
+                                        <div class="topbar-user-meta">
+                                            <div class="truncate text-sm font-semibold text-slate-900">{{ $user->name ?? __('messages.app_name') }}</div>
+                                            <div class="text-xs text-slate-500">{{ $user->email ?? '' }}</div>
+                                        </div>
+                                    </label>
+
+                                    <div tabindex="0" class="dropdown-content z-[90] mt-2 w-64 rounded-3xl border border-slate-200 bg-white p-3 shadow-lg">
+                                        <div class="mb-2 px-3 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
+                                            {{ $accountLabel }}
+                                        </div>
+                                        <ul class="menu w-full gap-1 rounded-2xl p-0">
+                                            @foreach ($accountLinks as $link)
+                                                <li>
+                                                    <a href="{{ route($link['route']) }}" class="rounded-2xl">
+                                                        {{ $link['label'] }}
+                                                    </a>
+                                                </li>
+                                            @endforeach
+                                            <li class="mt-1 border-t border-slate-200 pt-1">
+                                                <form method="POST" action="{{ route('logout') }}">
+                                                    @csrf
+                                                    <button type="submit" class="w-full rounded-2xl px-4 py-2 text-left text-sm font-medium text-red-600 transition hover:bg-red-50">
+                                                        {{ __('messages.nav_logout') }}
+                                                    </button>
+                                                </form>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
 
-                            <form method="POST" action="{{ route('logout') }}">
-                                @csrf
-                                <button type="submit" class="btn btn-outline btn-sm rounded-full border-slate-200 normal-case text-slate-700 hover:border-slate-300 hover:bg-slate-50">
-                                    {{ __('messages.nav_logout') }}
+                            <div class="ml-auto flex items-center gap-2 lg:hidden">
+                                <div class="dropdown dropdown-end">
+                                    <label tabindex="0" class="btn btn-ghost btn-sm rounded-full p-1 text-slate-700 hover:bg-slate-100">
+                                        <span class="inline-flex h-9 w-9 items-center justify-center rounded-full bg-green-100 text-sm font-semibold text-green-700">
+                                            {{ strtoupper(substr($user->name ?? 'W', 0, 1)) }}
+                                        </span>
+                                    </label>
+
+                                    <div tabindex="0" class="dropdown-content z-[90] mt-2 w-72 rounded-3xl border border-slate-200 bg-white p-4 shadow-lg">
+                                        <div class="topbar-user-card rounded-3xl">
+                                            <span class="topbar-user-avatar">
+                                                {{ strtoupper(substr($user->name ?? 'W', 0, 1)) }}
+                                            </span>
+                                            <div class="topbar-user-meta">
+                                                <div class="truncate text-sm font-semibold text-slate-900">{{ $user->name ?? __('messages.app_name') }}</div>
+                                                <div class="truncate text-xs text-slate-500">{{ $user->email ?? '' }}</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="mt-4 border-t border-slate-200 pt-4">
+                                            <div class="mb-4 text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
+                                                {{ $accountLabel }}
+                                            </div>
+                                            <div class="flex flex-col gap-2">
+                                                @foreach ($accountLinks as $link)
+                                                    <a
+                                                        href="{{ route($link['route']) }}"
+                                                        class="btn justify-start rounded-2xl border-0 normal-case shadow-none {{ request()->routeIs($link['active']) ? 'bg-green-50 text-green-700 hover:bg-green-100' : 'btn-ghost text-slate-700 hover:bg-slate-100' }}"
+                                                    >
+                                                        {{ $link['label'] }}
+                                                    </a>
+                                                @endforeach
+                                            </div>
+                                        </div>
+
+                                        <div class="mt-4 border-t border-slate-200 pt-4">
+                                            <form method="POST" action="{{ route('logout') }}">
+                                                @csrf
+                                                <button type="submit" class="btn btn-ghost btn-sm w-full justify-start rounded-2xl normal-case text-red-600 hover:bg-red-50">
+                                                    {{ __('messages.nav_logout') }}
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button
+                                    type="button"
+                                    class="btn btn-ghost btn-sm rounded-full"
+                                    @click="mobileOpen = !mobileOpen"
+                                    :aria-expanded="mobileOpen.toString()"
+                                    aria-label="Toggle workspace navigation"
+                                >
+                                    <svg x-show="!mobileOpen" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 7h16M4 12h16M4 17h16" />
+                                    </svg>
+                                    <svg x-cloak x-show="mobileOpen" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M6 6l12 12M18 6L6 18" />
+                                    </svg>
                                 </button>
-                            </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div x-cloak x-show="mobileOpen" x-transition.opacity class="border-t border-slate-200 py-4 lg:hidden">
+                        <div class="page-shell">
+                            <div class="space-y-4">
+                                @foreach ($mobileNavGroups as $group)
+                                    <div class="rounded-3xl border border-slate-200 bg-white p-4 shadow-sm">
+                                        <div class="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
+                                            {{ $group['label'] }}
+                                        </div>
+                                        <div class="flex flex-col gap-2">
+                                            @foreach ($group['links'] as $link)
+                                                <a
+                                                    href="{{ route($link['route']) }}"
+                                                    class="btn justify-start rounded-2xl border-0 normal-case shadow-none {{ request()->routeIs($link['active']) ? 'bg-green-50 text-green-700 hover:bg-green-100' : 'btn-ghost text-slate-700 hover:bg-slate-100' }}"
+                                                >
+                                                    {{ $link['label'] }}
+                                                </a>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                @endforeach
+
+                                <div class="rounded-3xl border border-slate-200 bg-white p-4 shadow-sm">
+                                    <div class="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
+                                        {{ __('messages.nav_language') }}
+                                    </div>
+                                    <div class="flex flex-wrap gap-2">
+                                        <a href="{{ route('locale.switch', 'en') }}" class="btn btn-outline btn-sm rounded-full border-slate-200 normal-case">
+                                            {{ __('messages.nav_english') }}
+                                        </a>
+                                        <a href="{{ route('locale.switch', 'zh_CN') }}" class="btn btn-outline btn-sm rounded-full border-slate-200 normal-case">
+                                            {{ json_decode('"\u4e2d\u6587"') }}
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </header>
 
                 <main class="workspace-main-shell">
-                    @if (session('success'))
-                        <div class="alert alert-success mb-6 rounded-2xl border border-green-200 bg-green-50 text-green-800">
-                            <span>{{ session('success') }}</span>
-                        </div>
-                    @endif
+                    <div class="page-shell">
+                        @if (session('success'))
+                            <div class="alert alert-success mb-6 rounded-2xl border border-green-200 bg-green-50 text-green-800">
+                                <span>{{ session('success') }}</span>
+                            </div>
+                        @endif
 
-                    @if (session('error'))
-                        <div class="alert alert-error mb-6 rounded-2xl border border-red-200 bg-red-50 text-red-800">
-                            <span>{{ session('error') }}</span>
-                        </div>
-                    @endif
+                        @if (session('error'))
+                            <div class="alert alert-error mb-6 rounded-2xl border border-red-200 bg-red-50 text-red-800">
+                                <span>{{ session('error') }}</span>
+                            </div>
+                        @endif
 
-                    @yield('content')
+                        @yield('content')
+                    </div>
                 </main>
             </div>
         </div>

@@ -122,11 +122,15 @@
     }
 
     .workspace-topbar {
-        @apply border-b border-slate-200 bg-white/80 px-4 py-4 backdrop-blur sm:px-6 lg:px-8;
+        @apply relative z-50 border-b border-slate-200 bg-white/90 backdrop-blur;
     }
 
     .workspace-topbar-shell {
-        @apply flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between;
+        @apply flex min-h-[4rem] items-center justify-between gap-4;
+    }
+
+    .site-topbar-shell {
+        @apply flex min-h-[4rem] items-center justify-between gap-4;
     }
 
     .workspace-search {
@@ -134,7 +138,7 @@
     }
 
     .workspace-main-shell {
-        @apply px-4 py-6 sm:px-6 lg:px-8 lg:py-8;
+        @apply py-6 lg:py-8;
     }
 
     .workspace-content-stack {
@@ -279,6 +283,22 @@
 
     .public-auth-stat {
         @apply rounded-3xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 shadow-sm;
+    }
+
+    .topbar-locale-switch {
+        @apply inline-flex rounded-full border border-slate-200 bg-white p-1 text-xs font-medium text-slate-500 shadow-sm;
+    }
+
+    .topbar-user-card {
+        @apply flex items-center gap-3 rounded-full border border-slate-200 bg-white px-3 py-1.5 shadow-sm;
+    }
+
+    .topbar-user-avatar {
+        @apply inline-flex h-9 w-9 items-center justify-center rounded-full bg-green-100 text-sm font-semibold text-green-700;
+    }
+
+    .topbar-user-meta {
+        @apply min-w-0 pr-1;
     }
 
     .empty-state-card {

@@ -66,7 +66,7 @@
                                         <div class="text-sm font-semibold text-slate-900">{{ __('messages.day_' . $dayKey) }}</div>
                                         <div class="mt-3 flex items-end justify-between gap-3">
                                             <div>
-                                                <div class="text-xs uppercase tracking-[0.16em] text-slate-400">Meals</div>
+                                                <div class="text-xs uppercase tracking-[0.16em] text-slate-400">{{ app()->getLocale() === 'zh_CN' ? '餐次' : 'Meals' }}</div>
                                                 <div class="mt-1 text-lg font-semibold text-slate-900">{{ $plannedCount }}</div>
                                             </div>
                                             <div class="text-right">
@@ -221,7 +221,7 @@
                 </div>
 
                 <div class="workspace-card">
-                    <h3 class="text-sm font-semibold uppercase tracking-[0.16em] text-slate-500">Week Overview</h3>
+                    <h3 class="text-sm font-semibold uppercase tracking-[0.16em] text-slate-500">{{ app()->getLocale() === 'zh_CN' ? '本周概览' : 'Week Overview' }}</h3>
                     <div class="mt-4 space-y-3">
                         @foreach ($dayOptions as $dayNumber => $dayKey)
                             @php
@@ -229,7 +229,7 @@
                             @endphp
                             <div class="flex items-center justify-between rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm">
                                 <span class="font-medium text-slate-900">{{ __('messages.day_' . $dayKey) }}</span>
-                                <span class="text-slate-600">{{ $dayItems->count() }} items</span>
+                                <span class="text-slate-600">{{ $dayItems->count() }} {{ app()->getLocale() === 'zh_CN' ? '项' : 'items' }}</span>
                             </div>
                         @endforeach
                     </div>

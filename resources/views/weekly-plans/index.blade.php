@@ -63,7 +63,7 @@
                             <th>{{ __('messages.weekly_plan_title') }}</th>
                             <th>{{ __('messages.weekly_plan_week_start_date') }}</th>
                             <th>{{ __('messages.weekly_plan_is_finalized') }}</th>
-                            <th>Updated</th>
+                            <th>{{ app()->getLocale() === 'zh_CN' ? '更新时间' : 'Updated' }}</th>
                             <th class="text-right">{{ __('messages.actions') }}</th>
                         </tr>
                     </thead>

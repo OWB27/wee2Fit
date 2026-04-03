@@ -12,8 +12,8 @@
                 <div class="workspace-card">
                     <div class="flex items-center justify-between gap-4">
                         <div>
-                            <h2 class="text-xl font-semibold text-slate-900">Profile Summary</h2>
-                            <p class="mt-2 text-sm leading-6 text-slate-600">Your plan will be calculated using this information.</p>
+                            <h2 class="text-xl font-semibold text-slate-900">{{ app()->getLocale() === 'zh_CN' ? '资料摘要' : 'Profile Summary' }}</h2>
+                            <p class="mt-2 text-sm leading-6 text-slate-600">{{ app()->getLocale() === 'zh_CN' ? '系统会使用这些资料来计算你的计划。' : 'Your plan will be calculated using this information.' }}</p>
                         </div>
 
                         <a href="{{ route('my-profile.edit') }}" class="btn btn-outline btn-sm rounded-full border-slate-200 px-4 normal-case text-slate-700 hover:border-green-200 hover:bg-green-50">
@@ -57,7 +57,7 @@
                 <div class="workspace-soft-card">
                     <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                         <div>
-                            <h2 class="text-xl font-semibold text-slate-900">Ready to Generate Your Plan</h2>
+                            <h2 class="text-xl font-semibold text-slate-900">{{ app()->getLocale() === 'zh_CN' ? '准备生成你的计划' : 'Ready to Generate Your Plan' }}</h2>
                             <p class="mt-2 text-sm leading-6 text-slate-600">{{ __('messages.methodology_paragraph_2') }}</p>
                         </div>
 
@@ -71,25 +71,25 @@
                 </div>
 
                 <div class="workspace-card">
-                    <h2 class="text-xl font-semibold text-slate-900">What Will Be Generated</h2>
-                    <p class="mt-2 text-sm leading-6 text-slate-600">Your personalized plan includes calorie targets and daily macro guidance.</p>
+                    <h2 class="text-xl font-semibold text-slate-900">{{ app()->getLocale() === 'zh_CN' ? '将会生成什么' : 'What Will Be Generated' }}</h2>
+                    <p class="mt-2 text-sm leading-6 text-slate-600">{{ app()->getLocale() === 'zh_CN' ? '你的个性化计划将包含热量目标和每日宏量营养建议。' : 'Your personalized plan includes calorie targets and daily macro guidance.' }}</p>
 
                     <div class="mt-6 grid gap-3 md:grid-cols-2">
                         <div class="rounded-[1.25rem] border border-slate-200 bg-slate-50 p-4">
                             <div class="font-semibold text-slate-900">{{ __('messages.plan_bmr') }}</div>
-                            <p class="mt-2 text-sm leading-6 text-slate-600">Calories burned at complete rest.</p>
+                            <p class="mt-2 text-sm leading-6 text-slate-600">{{ app()->getLocale() === 'zh_CN' ? '完全静息状态下消耗的热量。' : 'Calories burned at complete rest.' }}</p>
                         </div>
                         <div class="rounded-[1.25rem] border border-slate-200 bg-slate-50 p-4">
                             <div class="font-semibold text-slate-900">{{ __('messages.plan_tdee') }}</div>
-                            <p class="mt-2 text-sm leading-6 text-slate-600">Estimated total daily energy expenditure.</p>
+                            <p class="mt-2 text-sm leading-6 text-slate-600">{{ app()->getLocale() === 'zh_CN' ? '估算的每日总能量消耗。' : 'Estimated total daily energy expenditure.' }}</p>
                         </div>
                         <div class="rounded-[1.25rem] border border-slate-200 bg-slate-50 p-4">
                             <div class="font-semibold text-slate-900">{{ __('messages.plan_target_calories') }}</div>
-                            <p class="mt-2 text-sm leading-6 text-slate-600">Daily target adjusted for your goal and intensity.</p>
+                            <p class="mt-2 text-sm leading-6 text-slate-600">{{ app()->getLocale() === 'zh_CN' ? '根据你的目标和强度调整后的每日目标。' : 'Daily target adjusted for your goal and intensity.' }}</p>
                         </div>
                         <div class="rounded-[1.25rem] border border-slate-200 bg-slate-50 p-4">
-                            <div class="font-semibold text-slate-900">Macro Targets</div>
-                            <p class="mt-2 text-sm leading-6 text-slate-600">Protein, carbs, and fat targets for everyday planning.</p>
+                            <div class="font-semibold text-slate-900">{{ app()->getLocale() === 'zh_CN' ? '宏量营养目标' : 'Macro Targets' }}</div>
+                            <p class="mt-2 text-sm leading-6 text-slate-600">{{ app()->getLocale() === 'zh_CN' ? '用于日常规划的蛋白质、碳水和脂肪目标。' : 'Protein, carbs, and fat targets for everyday planning.' }}</p>
                         </div>
                     </div>
                 </div>
@@ -97,8 +97,8 @@
 
             <aside class="space-y-4">
                 <div class="workspace-card">
-                    <h2 class="text-xl font-semibold text-slate-900">Calculation Preview</h2>
-                    <p class="mt-2 text-sm leading-6 text-slate-600">Based on your current profile settings.</p>
+                    <h2 class="text-xl font-semibold text-slate-900">{{ app()->getLocale() === 'zh_CN' ? '计算预览' : 'Calculation Preview' }}</h2>
+                    <p class="mt-2 text-sm leading-6 text-slate-600">{{ app()->getLocale() === 'zh_CN' ? '基于你当前的资料设置。' : 'Based on your current profile settings.' }}</p>
 
                     <div class="mt-6 space-y-4">
                         <div>

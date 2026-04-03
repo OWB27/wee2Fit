@@ -40,7 +40,7 @@
                 <div class="grid gap-4 sm:grid-cols-2">
                     <div class="public-soft-panel sm:col-span-2">
                         <div class="text-sm font-semibold uppercase tracking-[0.16em] text-emerald-700">{{ __('messages.plan_target_calories') }}</div>
-                        <div class="mt-3 text-4xl font-semibold tracking-tight text-slate-900">Daily</div>
+                        <div class="mt-3 text-4xl font-semibold tracking-tight text-slate-900">{{ app()->getLocale() === 'zh_CN' ? '每日' : 'Daily' }}</div>
                         <p class="mt-3 text-sm leading-6 text-slate-600">{{ __('messages.methodology_paragraph_2') }}</p>
                     </div>
 
