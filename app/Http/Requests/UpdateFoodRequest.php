@@ -25,7 +25,7 @@ class UpdateFoodRequest extends FormRequest
             'protein_per_100g' => ['required', 'numeric', 'min:0', 'max:100'],
             'carbs_per_100g' => ['required', 'numeric', 'min:0', 'max:100'],
             'fat_per_100g' => ['required', 'numeric', 'min:0', 'max:100'],
-            'image_path' => ['nullable', 'string', 'max:255'],
+            'image' => ['nullable', 'image', 'max:2048'],
             'is_verified' => ['nullable', 'boolean'],
         ];
     }

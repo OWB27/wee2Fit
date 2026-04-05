@@ -17,17 +17,7 @@ class PlanController extends Controller
 
     public function create(Request $request): View|RedirectResponse
     {
-        $profile = $request->user()->profile;
-
-        if (! $profile) {
-            return redirect()
-                ->route('my-profile.edit')
-                ->with('error', __('messages.plan_profile_required'));
-        }
-
-        return view('plans.create', [
-            'profile' => $profile,
-        ]);
+        return $this->renderPlanPage($request);
     }
 
     public function store(StorePlanRequest $request): RedirectResponse
@@ -59,20 +49,33 @@ class PlanController extends Controller
 
     public function showCurrent(Request $request): View|RedirectResponse
     {
-        $plan = $request->user()
+        return $this->renderPlanPage($request);
+    }
+
+    protected function renderPlanPage(Request $request): View|RedirectResponse
+    {
+        $profile = $request->user()->profile;
+
+        if (! $profile) {
+            return redirect()
+                ->route('my-profile.edit')
+                ->with('error', __('messages.plan_profile_required'));
+        }
+
+        $plan = $this->findCurrentPlanForUser($request);
+
+        return view('plans.show', [
+            'profile' => $profile,
+            'plan' => $plan,
+        ]);
+    }
+
+    protected function findCurrentPlanForUser(Request $request)
+    {
+        return $request->user()
             ->plans()
             ->where('is_current', true)
             ->latest()
             ->first();
-
-        if (! $plan) {
-            return redirect()
-                ->route('plans.create')
-                ->with('error', __('messages.plan_not_found'));
-        }
-
-        return view('plans.current', [
-            'plan' => $plan,
-        ]);
     }
 }

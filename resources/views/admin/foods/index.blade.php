@@ -9,7 +9,7 @@
                 <p class="page-description mt-3">{{ __('messages.admin_foods_description') }}</p>
             </div>
 
-            <a href="{{ route('admin.foods.create') }}" class="btn btn-primary rounded-full border-0 px-5 normal-case shadow-sm">
+            <a href="{{ route('admin.foods.create') }}" class="btn-ui btn-ui-md btn-ui-primary">
                 {{ __('messages.admin_food_create') }}
             </a>
         </section>
@@ -17,19 +17,19 @@
         @if ($foods->isEmpty())
             <section class="empty-state-card">
                 <div class="empty-state-icon">AF</div>
-                <h2 class="mt-4 text-lg font-semibold text-slate-900">{{ __('messages.food_empty') }}</h2>
-                <p class="mx-auto mt-2 max-w-xl text-sm leading-6 text-slate-600">
+                <h2 class="empty-state-title">{{ __('messages.food_empty') }}</h2>
+                <p class="empty-state-description">
                     {{ __('messages.admin_foods_description') }}
                 </p>
                 <div class="mt-5">
-                    <a href="{{ route('admin.foods.create') }}" class="btn btn-primary rounded-full border-0 px-5 normal-case shadow-sm">
+                    <a href="{{ route('admin.foods.create') }}" class="btn-ui btn-ui-md btn-ui-primary">
                         {{ __('messages.admin_food_create') }}
                     </a>
                 </div>
             </section>
         @else
-            <section class="section-card p-0 overflow-hidden">
-                <div class="overflow-x-auto">
+            <section class="section-card-table">
+                <div class="table-scroll-shell">
                     <table class="table">
                         <thead>
                             <tr class="text-slate-500">
@@ -51,24 +51,16 @@
                                     <td>{{ $food->calories_per_100g }}</td>
                                     <td>
                                         @if ($food->is_verified)
-                                            <span class="badge badge-success rounded-full">{{ __('messages.yes') }}</span>
+                                            <span class="badge-ui badge-ui-success">{{ __('messages.yes') }}</span>
                                         @else
-                                            <span class="badge badge-outline rounded-full text-slate-600">{{ __('messages.no') }}</span>
+                                            <span class="badge-ui badge-ui-neutral">{{ __('messages.no') }}</span>
                                         @endif
                                     </td>
                                     <td>
-                                        <div class="flex flex-wrap gap-2">
-                                            <a href="{{ route('admin.foods.edit', $food) }}" class="btn btn-outline btn-sm rounded-full border-slate-200 normal-case text-slate-700 hover:border-slate-300 hover:bg-slate-50">
+                                        <div class="table-action-cell">
+                                            <a href="{{ route('admin.foods.edit', $food) }}" class="btn-ui btn-ui-sm btn-ui-secondary">
                                                 {{ __('messages.edit') }}
                                             </a>
-
-                                            <form action="{{ route('admin.foods.destroy', $food) }}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-error btn-sm rounded-full border-0 normal-case">
-                                                    {{ __('messages.delete') }}
-                                                </button>
-                                            </form>
                                         </div>
                                     </td>
                                 </tr>
@@ -79,6 +71,8 @@
             </section>
         @endif
 
-        {{ $foods->links() }}
+        <div class="pagination-shell">
+            {{ $foods->links() }}
+        </div>
     </div>
 @endsection

@@ -45,13 +45,10 @@
             type="checkbox"
             name="is_finalized"
             value="1"
-            class="checkbox checkbox-sm checkbox-primary rounded-md"
+            class="form-checkbox"
             @checked(old('is_finalized', $weeklyPlan->is_finalized ?? false))
         >
         <span>{{ __('messages.weekly_plan_is_finalized') }}</span>
     </label>
 
-    <button type="submit" class="btn btn-primary rounded-full border-0 px-5 normal-case shadow-sm">
-        {{ __('messages.save') }}
-    </button>
 </div>

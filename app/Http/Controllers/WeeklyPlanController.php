@@ -23,6 +23,7 @@ class WeeklyPlanController extends Controller
 
         return view('weekly-plans.index', [
             'weeklyPlans' => $weeklyPlans,
+            'weeklyPlanSummary' => $this->buildWeeklyPlanIndexSummary($weeklyPlans),
         ]);
     }
 
@@ -54,16 +55,9 @@ class WeeklyPlanController extends Controller
             ->orderBy('name')
             ->get();
 
-        $foodPickerItems = $foods->map(function ($food) {
-            return [
-                'id' => $food->id,
-                'name' => $food->displayName(),
-                'category' => __('messages.food_category_' . $food->category),
-            ];
-        })->values();
-
         $slots = $this->buildSlots($weeklyPlan);
-        $summary = $this->buildWeeklySummary($request, $weeklyPlan);
+        $plannerSummary = $this->buildWeeklySummaryData($request, $weeklyPlan);
+        $plannerDays = $this->buildPlannerDaySummaries($slots);
 
         return view('weekly-plans.show', [
             'weeklyPlan' => $weeklyPlan,
@@ -71,8 +65,9 @@ class WeeklyPlanController extends Controller
             'dayOptions' => WeeklyPlan::DAY_OPTIONS,
             'mealTypeOptions' => WeeklyPlanFood::MEAL_TYPE_OPTIONS,
             'slots' => $slots,
-            'summary' => $summary,
-            'foodPickerItems' => $foodPickerItems,
+            'plannerSummary' => $plannerSummary,
+            'foodPickerOptions' => $this->buildFoodPickerOptions($foods),
+            'plannerDays' => $plannerDays,
         ]);
     }
 
@@ -90,6 +85,17 @@ class WeeklyPlanController extends Controller
         return redirect()
             ->route('weekly-plans.show', $weeklyPlan)
             ->with('success', __('messages.weekly_plan_updated'));
+    }
+
+    public function destroy(Request $request, WeeklyPlan $weeklyPlan): RedirectResponse
+    {
+        $this->ensureOwner($request, $weeklyPlan);
+
+        $weeklyPlan->delete();
+
+        return redirect()
+            ->route('weekly-plans.index')
+            ->with('success', __('messages.weekly_plan_deleted'));
     }
 
     protected function ensureOwner(Request $request, WeeklyPlan $weeklyPlan): void
@@ -110,13 +116,37 @@ class WeeklyPlanController extends Controller
         }
 
         foreach ($weeklyPlan->weeklyPlanFoods as $item) {
+            if (! isset($slots[$item->day_of_week][$item->meal_type])) {
+                continue;
+            }
+
             $slots[$item->day_of_week][$item->meal_type][] = $item;
         }
 
         return $slots;
     }
 
-    protected function buildWeeklySummary(Request $request, WeeklyPlan $weeklyPlan): array
+    protected function buildWeeklyPlanIndexSummary($weeklyPlans): array
+    {
+        return [
+            'total' => $weeklyPlans->count(),
+            'finalized' => $weeklyPlans->where('is_finalized', true)->count(),
+            'draft' => $weeklyPlans->where('is_finalized', false)->count(),
+        ];
+    }
+
+    protected function buildFoodPickerOptions($foods): array
+    {
+        return $foods->map(function ($food) {
+            return [
+                'id' => $food->id,
+                'name' => $food->displayName(),
+                'category' => __('messages.food_category_' . $food->category),
+            ];
+        })->values()->all();
+    }
+
+    protected function buildWeeklySummaryData(Request $request, WeeklyPlan $weeklyPlan): array
     {
         $items = $weeklyPlan->weeklyPlanFoods;
 
@@ -137,15 +167,44 @@ class WeeklyPlanController extends Controller
         $avgVsTarget = $targetCalories
             ? $averageDailyCalories - $targetCalories
             : null;
+        $targetWeeklyProtein = $currentPlan?->protein_g ? round($currentPlan->protein_g * 7, 1) : null;
+        $targetWeeklyCarbs = $currentPlan?->carbs_g ? round($currentPlan->carbs_g * 7, 1) : null;
+        $targetWeeklyFat = $currentPlan?->fat_g ? round($currentPlan->fat_g * 7, 1) : null;
 
         return [
             'weekly_calories' => round($weeklyCalories, 1),
             'average_daily_calories' => round($averageDailyCalories, 1),
             'target_calories' => $targetCalories,
             'avg_vs_target' => $avgVsTarget !== null ? round($avgVsTarget, 1) : null,
+            'avg_progress_percent' => $targetCalories ? min(100, round(($averageDailyCalories / $targetCalories) * 100, 1)) : 0,
             'weekly_protein_g' => round($weeklyProtein, 1),
             'weekly_carbs_g' => round($weeklyCarbs, 1),
             'weekly_fat_g' => round($weeklyFat, 1),
+            'target_weekly_protein_g' => $targetWeeklyProtein,
+            'target_weekly_carbs_g' => $targetWeeklyCarbs,
+            'target_weekly_fat_g' => $targetWeeklyFat,
+            'protein_progress_percent' => $targetWeeklyProtein ? min(100, round(($weeklyProtein / $targetWeeklyProtein) * 100, 1)) : 0,
+            'carbs_progress_percent' => $targetWeeklyCarbs ? min(100, round(($weeklyCarbs / $targetWeeklyCarbs) * 100, 1)) : 0,
+            'fat_progress_percent' => $targetWeeklyFat ? min(100, round(($weeklyFat / $targetWeeklyFat) * 100, 1)) : 0,
         ];
+    }
+
+    protected function buildPlannerDaySummaries(array $slots): array
+    {
+        $plannerDays = [];
+
+        foreach (WeeklyPlan::DAY_OPTIONS as $dayNumber => $dayKey) {
+            $dayItems = collect($slots[$dayNumber])->flatten(1);
+
+            $plannerDays[$dayNumber] = [
+                'day_number' => $dayNumber,
+                'day_key' => $dayKey,
+                'item_count' => $dayItems->count(),
+                'day_calories' => round($dayItems->sum(fn ($item) => $item->calories()), 1),
+                'meals' => $slots[$dayNumber],
+            ];
+        }
+
+        return $plannerDays;
     }
 }

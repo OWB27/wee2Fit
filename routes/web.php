@@ -49,6 +49,7 @@ Route::middleware(['auth', 'active'])->group(function () {
     Route::post('/weekly-plans', [WeeklyPlanController::class, 'store'])->name('weekly-plans.store');
     Route::get('/weekly-plans/{weeklyPlan}', [WeeklyPlanController::class, 'show'])->name('weekly-plans.show');
     Route::put('/weekly-plans/{weeklyPlan}', [WeeklyPlanController::class, 'update'])->name('weekly-plans.update');
+    Route::delete('/weekly-plans/{weeklyPlan}', [WeeklyPlanController::class, 'destroy'])->name('weekly-plans.destroy');
 
     Route::post('/weekly-plans/{weeklyPlan}/foods', [WeeklyPlanFoodController::class, 'store'])->name('weekly-plan-foods.store');
     Route::delete('/weekly-plan-foods/{weeklyPlanFood}', [WeeklyPlanFoodController::class, 'destroy'])->name('weekly-plan-foods.destroy');
@@ -66,6 +67,8 @@ Route::middleware(['auth', 'active', 'admin'])->prefix('admin')->name('admin.')-
     Route::delete('/foods/{food}', [AdminFoodController::class, 'destroy'])->name('foods.destroy');
 
     Route::get('/users', [AdminUserController::class, 'index'])->name('users.index');
+    Route::get('/users/{user}/edit', [AdminUserController::class, 'edit'])->name('users.edit');
+    Route::put('/users/{user}', [AdminUserController::class, 'update'])->name('users.update');
     Route::patch('/users/{user}/toggle-active', [AdminUserController::class, 'toggleActive'])->name('users.toggle-active');
 });
 

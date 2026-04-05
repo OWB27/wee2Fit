@@ -18,8 +18,8 @@ class BodyMetric extends Model
     {
         return [
             'recorded_on' => 'date',
-            'weight_kg' => 'decimal:2',
-            'body_fat_percentage' => 'decimal:2',
+            'weight_kg' => 'decimal:1',
+            'body_fat_percentage' => 'decimal:1',
         ];
     }
 

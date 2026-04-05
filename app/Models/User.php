@@ -55,6 +55,11 @@ class User extends Authenticatable
         return $this->hasMany(BodyMetric::class);
     }
 
+    public function tags()
+    {
+        return $this->belongsToMany(UserTag::class, 'user_tag_user')->withTimestamps();
+    }
+
     public function isAdmin(): bool
     {
         return $this->role === self::ROLE_ADMIN;

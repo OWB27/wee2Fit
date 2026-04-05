@@ -4,16 +4,6 @@
     'maxWidth' => '2xl'
 ])
 
-@php
-$maxWidth = [
-    'sm' => 'sm:max-w-sm',
-    'md' => 'sm:max-w-md',
-    'lg' => 'sm:max-w-lg',
-    'xl' => 'sm:max-w-xl',
-    '2xl' => 'sm:max-w-2xl',
-][$maxWidth];
-@endphp
-
 <div
     x-data="{
         show: @js($show),
@@ -65,7 +55,14 @@ $maxWidth = [
 
     <div
         x-show="show"
-        class="mb-6 overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-2xl transform transition-all sm:mx-auto sm:w-full {{ $maxWidth }}"
+        @class([
+            'mb-6 overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-2xl transform transition-all sm:mx-auto sm:w-full',
+            'sm:max-w-sm' => $maxWidth === 'sm',
+            'sm:max-w-md' => $maxWidth === 'md',
+            'sm:max-w-lg' => $maxWidth === 'lg',
+            'sm:max-w-xl' => $maxWidth === 'xl',
+            'sm:max-w-2xl' => $maxWidth === '2xl',
+        ])
         x-transition:enter="ease-out duration-300"
         x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
         x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"

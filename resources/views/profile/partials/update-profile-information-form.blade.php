@@ -33,13 +33,13 @@
                     <p>
                         {{ __('Your email address is unverified.') }}
 
-                        <button form="send-verification" class="ml-1 font-medium text-green-700 underline underline-offset-4 transition hover:text-green-800">
+                        <button form="send-verification" class="ml-1 text-link-ui-underline">
                             {{ __('Click here to re-send the verification email.') }}
                         </button>
                     </p>
 
                     @if (session('status') === 'verification-link-sent')
-                        <p class="mt-3 font-medium text-green-700">
+                        <p class="mt-3 status-inline-success">
                             {{ __('A new verification link has been sent to your email address.') }}
                         </p>
                     @endif
@@ -56,7 +56,7 @@
                     x-show="show"
                     x-transition
                     x-init="setTimeout(() => show = false, 2000)"
-                    class="text-sm font-medium text-green-700"
+                    class="status-inline-success"
                 >{{ __('Saved.') }}</p>
             @endif
         </div>

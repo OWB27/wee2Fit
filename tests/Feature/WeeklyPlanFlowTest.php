@@ -56,4 +56,29 @@ class WeeklyPlanFlowTest extends TestCase
 
         $response->assertForbidden();
     }
+
+    public function test_user_can_delete_their_weekly_plan(): void
+    {
+        $user = User::factory()->create();
+
+        $weeklyPlan = WeeklyPlan::create([
+            'user_id' => $user->id,
+            'title' => 'Delete Week',
+            'week_start_date' => '2026-04-06',
+            'is_finalized' => false,
+            'note' => 'Temporary plan',
+        ]);
+
+        $response = $this
+            ->actingAs($user)
+            ->delete(route('weekly-plans.destroy', $weeklyPlan));
+
+        $response
+            ->assertRedirect(route('weekly-plans.index'))
+            ->assertSessionHas('success', __('messages.weekly_plan_deleted'));
+
+        $this->assertDatabaseMissing('weekly_plans', [
+            'id' => $weeklyPlan->id,
+        ]);
+    }
 }

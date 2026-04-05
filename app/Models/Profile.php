@@ -32,8 +32,8 @@ class Profile extends Model
     {
         return [
             'birth_date' => 'date',
-            'height_cm' => 'decimal:2',
-            'current_weight_kg' => 'decimal:2',
+            'height_cm' => 'decimal:1',
+            'current_weight_kg' => 'decimal:1',
         ];
     }
 

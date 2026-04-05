@@ -10,22 +10,43 @@ class CurrentPlanPageTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_current_plan_page_redirects_when_user_has_no_current_plan(): void
+    public function test_current_plan_page_still_loads_when_user_has_no_current_plan(): void
     {
         $user = User::factory()->create();
+
+        $user->profile()->create([
+            'sex' => 'male',
+            'birth_date' => '2000-05-10',
+            'height_cm' => '175.0',
+            'current_weight_kg' => '72.0',
+            'activity_level' => 'moderate',
+            'goal' => 'cut',
+            'intensity' => 'mild',
+        ]);
 
         $response = $this
             ->actingAs($user)
             ->get(route('plans.current'));
 
         $response
-            ->assertRedirect(route('plans.create'))
-            ->assertSessionHas('error', __('messages.plan_not_found'));
+            ->assertOk()
+            ->assertSeeText(__('messages.nav_plan'))
+            ->assertSeeText(__('messages.plan_generate_button'));
     }
 
     public function test_current_plan_page_displays_the_users_current_plan(): void
     {
         $user = User::factory()->create();
+
+        $user->profile()->create([
+            'sex' => 'female',
+            'birth_date' => '2002-05-10',
+            'height_cm' => '168.0',
+            'current_weight_kg' => '60.0',
+            'activity_level' => 'moderate',
+            'goal' => 'cut',
+            'intensity' => 'mild',
+        ]);
 
         $user->plans()->create([
             'age' => 22,
@@ -50,7 +71,7 @@ class CurrentPlanPageTest extends TestCase
 
         $response
             ->assertOk()
-            ->assertSeeText(__('messages.plan_current_title'))
+            ->assertSeeText(__('messages.nav_plan'))
             ->assertSeeText('1850')
             ->assertSeeText(__('messages.goal_cut'));
     }

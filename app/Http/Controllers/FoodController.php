@@ -17,7 +17,7 @@ class FoodController extends Controller
                 $query->where('category', $category);
             })
             ->orderBy('name')
-            ->paginate(12)
+            ->paginate(8)
             ->withQueryString();
 
         return view('foods.index', [

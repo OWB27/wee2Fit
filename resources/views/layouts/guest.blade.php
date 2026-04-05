@@ -10,11 +10,9 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body>
-    @php
-        $user = auth()->user();
-    @endphp
-
     <div class="relative min-h-screen overflow-hidden">
+        <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(220,252,231,0.9),transparent_24%),radial-gradient(circle_at_85%_20%,rgba(219,234,254,0.75),transparent_20%),linear-gradient(180deg,rgba(248,250,248,1)_0%,rgba(255,255,255,0.96)_100%)]"></div>
+
         <header class="sticky top-0 z-40 border-b border-slate-200 bg-white/90 backdrop-blur">
             <div class="page-shell">
                 <div class="site-topbar-shell">
@@ -25,13 +23,13 @@
                         </a>
 
                         <nav class="hidden md:flex md:flex-wrap md:items-center md:gap-2">
-                            <a href="{{ route('home') }}" class="btn btn-sm rounded-full border-0 normal-case shadow-none {{ request()->routeIs('home') ? 'bg-green-50 text-green-700 hover:bg-green-100' : 'btn-ghost text-slate-600 hover:bg-slate-100 hover:text-slate-900' }}">
+                            <a href="{{ route('home') }}" class="{{ request()->routeIs('home') ? 'btn-ui-nav btn-ui-nav-active' : 'btn-ui-nav' }}">
                                 {{ __('messages.nav_home') }}
                             </a>
-                            <a href="{{ route('methodology') }}" class="btn btn-sm rounded-full border-0 normal-case shadow-none {{ request()->routeIs('methodology') ? 'bg-green-50 text-green-700 hover:bg-green-100' : 'btn-ghost text-slate-600 hover:bg-slate-100 hover:text-slate-900' }}">
+                            <a href="{{ route('methodology') }}" class="{{ request()->routeIs('methodology') ? 'btn-ui-nav btn-ui-nav-active' : 'btn-ui-nav' }}">
                                 {{ __('messages.nav_methodology') }}
                             </a>
-                            <a href="{{ route('foods.index') }}" class="btn btn-sm rounded-full border-0 normal-case shadow-none {{ request()->routeIs('foods.*') ? 'bg-green-50 text-green-700 hover:bg-green-100' : 'btn-ghost text-slate-600 hover:bg-slate-100 hover:text-slate-900' }}">
+                            <a href="{{ route('foods.index') }}" class="{{ request()->routeIs('foods.*') ? 'btn-ui-nav btn-ui-nav-active' : 'btn-ui-nav' }}">
                                 {{ __('messages.nav_food_library') }}
                             </a>
                         </nav>
@@ -39,32 +37,24 @@
 
                     <div class="flex items-center gap-3">
                         <div class="dropdown dropdown-end">
-                            <label tabindex="0" class="btn btn-ghost btn-sm rounded-full normal-case text-slate-600 hover:bg-slate-100">
+                            <label tabindex="0" class="btn-ui-nav">
                                 {{ __('messages.nav_language') }}
                             </label>
 
                             <ul tabindex="0" class="menu dropdown-content z-[1] mt-2 w-40 rounded-2xl border border-slate-200 bg-white p-2 shadow-lg">
-                                <li>
-                                    <a href="{{ route('locale.switch', 'en') }}">
-                                        {{ __('messages.nav_english') }}
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('locale.switch', 'zh_CN') }}">
-                                        {{ json_decode('"\u4e2d\u6587"') }}
-                                    </a>
-                                </li>
+                                <li><a href="{{ route('locale.switch', 'en') }}">{{ __('messages.nav_english') }}</a></li>
+                                <li><a href="{{ route('locale.switch', 'zh_CN') }}">{{ __('messages.nav_chinese') }}</a></li>
                             </ul>
                         </div>
 
                         @auth
                             <div class="topbar-user-card">
                                 <span class="topbar-user-avatar">
-                                    {{ strtoupper(substr($user->name ?? 'W', 0, 1)) }}
+                                    {{ strtoupper(substr(auth()->user()->name ?? 'W', 0, 1)) }}
                                 </span>
                                 <div class="topbar-user-meta">
-                                    <div class="truncate text-sm font-semibold text-slate-900">{{ $user->name ?? __('messages.app_name') }}</div>
-                                    <div class="text-xs text-slate-500">{{ $user->email ?? '' }}</div>
+                                    <div class="truncate text-sm font-semibold text-slate-900">{{ auth()->user()->name ?? __('messages.app_name') }}</div>
+                                    <div class="text-xs text-slate-500">{{ auth()->user()->email ?? '' }}</div>
                                 </div>
                             </div>
                         @endauth
@@ -74,50 +64,19 @@
         </header>
 
         <div class="page-shell relative flex min-h-screen flex-col py-6 sm:py-8">
-
             <div class="flex flex-1 items-center py-10 sm:py-14">
-                <div class="grid w-full gap-8 lg:grid-cols-[1.15fr,0.85fr] lg:items-center">
-                    <div class="space-y-6">
-                        <div class="inline-flex items-center rounded-full border border-green-100 bg-green-50 px-4 py-2 text-sm font-medium text-green-800 shadow-sm">
-                            {{ __('messages.home_learn_methodology') }}
-                        </div>
-
-                        <div class="space-y-4">
-                            <h1 class="text-4xl font-semibold tracking-tight text-slate-900 sm:text-5xl">
-                                {{ __('messages.home_title') }}
-                            </h1>
-                            <p class="max-w-xl text-base leading-7 text-slate-600 sm:text-lg">
-                                {{ __('messages.home_subtitle') }}
-                            </p>
-                        </div>
-
-                        <div class="flex flex-wrap gap-3">
-                            <span class="public-auth-stat">
-                                {{ __('messages.my_profile_title') }}
-                            </span>
-                            <span class="public-auth-stat">
-                                {{ __('messages.plan_current_title') }}
-                            </span>
-                            <span class="public-auth-stat">
-                                {{ __('messages.progress_title') }}
-                            </span>
-                            <span class="public-auth-stat">
-                                {{ __('messages.weekly_plans_title') }}
-                            </span>
-                        </div>
-                    </div>
-
+                <div class="grid w-full gap-8 lg:grid-cols-[0.85fr,1.15fr] lg:items-center">
                     <div class="public-auth-panel">
                         <div class="mb-6 flex flex-wrap gap-2">
                             <a
                                 href="{{ route('login') }}"
-                                class="btn btn-sm rounded-full border-0 normal-case shadow-none {{ request()->routeIs('login') ? 'bg-green-50 text-green-700 hover:bg-green-100' : 'btn-ghost text-slate-600 hover:bg-slate-100 hover:text-slate-900' }}"
+                                class="{{ request()->routeIs('login') ? 'btn-ui-nav btn-ui-nav-active' : 'btn-ui-nav' }}"
                             >
                                 {{ __('messages.nav_login') }}
                             </a>
                             <a
                                 href="{{ route('register') }}"
-                                class="btn btn-sm rounded-full border-0 normal-case shadow-none {{ request()->routeIs('register') ? 'bg-green-50 text-green-700 hover:bg-green-100' : 'btn-ghost text-slate-600 hover:bg-slate-100 hover:text-slate-900' }}"
+                                class="{{ request()->routeIs('register') ? 'btn-ui-nav btn-ui-nav-active' : 'btn-ui-nav' }}"
                             >
                                 {{ __('messages.nav_register') }}
                             </a>
@@ -125,6 +84,46 @@
 
                         <div class="space-y-6">
                             {{ $slot }}
+                        </div>
+                    </div>
+
+                    <div class="space-y-6">
+                        <div class="overflow-hidden rounded-[2rem] border border-emerald-100/80 bg-white/85 p-7 shadow-sm backdrop-blur sm:p-8">
+                            <div class="space-y-4">
+                                <p class="page-kicker">{{ __('messages.app_name') }}</p>
+                                <h1 class="text-4xl font-semibold tracking-tight text-slate-900 sm:text-5xl">
+                                    {{ __('messages.home_title') }}
+                                </h1>
+                                <p class="max-w-xl text-base leading-7 text-slate-600 sm:text-lg">
+                                    {{ __('messages.home_subtitle') }}
+                                </p>
+                            </div>
+
+                            <div class="mt-6 grid gap-3 sm:grid-cols-2">
+                                <div class="rounded-[1.5rem] border border-slate-200/80 bg-white/80 p-4 shadow-sm">
+                                    <div class="inline-flex items-center rounded-2xl bg-gradient-to-br from-emerald-100 to-green-50 px-3 py-2 text-sm font-semibold text-emerald-700">01</div>
+                                    <h2 class="mt-4 text-lg font-semibold tracking-tight text-slate-900">{{ __('messages.my_profile_title') }}</h2>
+                                    <p class="mt-2 text-sm leading-6 text-slate-600">{{ __('messages.my_profile_description') }}</p>
+                                </div>
+
+                                <div class="rounded-[1.5rem] border border-slate-200/80 bg-white/80 p-4 shadow-sm">
+                                    <div class="inline-flex items-center rounded-2xl bg-gradient-to-br from-sky-100 to-cyan-50 px-3 py-2 text-sm font-semibold text-sky-700">02</div>
+                                    <h2 class="mt-4 text-lg font-semibold tracking-tight text-slate-900">{{ __('messages.plan_generate_title') }}</h2>
+                                    <p class="mt-2 text-sm leading-6 text-slate-600">{{ __('messages.plan_generate_description') }}</p>
+                                </div>
+
+                                <div class="rounded-[1.5rem] border border-slate-200/80 bg-white/80 p-4 shadow-sm">
+                                    <div class="inline-flex items-center rounded-2xl bg-gradient-to-br from-amber-100 to-yellow-50 px-3 py-2 text-sm font-semibold text-amber-700">03</div>
+                                    <h2 class="mt-4 text-lg font-semibold tracking-tight text-slate-900">{{ __('messages.weekly_plans_title') }}</h2>
+                                    <p class="mt-2 text-sm leading-6 text-slate-600">{{ __('messages.weekly_plans_description') }}</p>
+                                </div>
+
+                                <div class="rounded-[1.5rem] border border-slate-200/80 bg-white/80 p-4 shadow-sm">
+                                    <div class="inline-flex items-center rounded-2xl bg-gradient-to-br from-violet-100 to-fuchsia-50 px-3 py-2 text-sm font-semibold text-violet-700">04</div>
+                                    <h2 class="mt-4 text-lg font-semibold tracking-tight text-slate-900">{{ __('messages.progress_title') }}</h2>
+                                    <p class="mt-2 text-sm leading-6 text-slate-600">{{ __('messages.progress_description') }}</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

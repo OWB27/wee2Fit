@@ -64,6 +64,28 @@ class FoodLibraryTest extends TestCase
             ->assertSeeText('13.00 g');
     }
 
+    public function test_food_library_paginates_after_eight_items(): void
+    {
+        foreach (range(1, 9) as $index) {
+            $this->createFood([
+                'name' => sprintf('Food %02d', $index),
+            ]);
+        }
+
+        $firstPage = $this->get(route('foods.index'));
+        $secondPage = $this->get(route('foods.index', ['page' => 2]));
+
+        $firstPage
+            ->assertOk()
+            ->assertSeeText('Food 01')
+            ->assertSeeText('Food 08')
+            ->assertDontSeeText('Food 09');
+
+        $secondPage
+            ->assertOk()
+            ->assertSeeText('Food 09');
+    }
+
     private function createFood(array $attributes = []): Food
     {
         return Food::create(array_merge([

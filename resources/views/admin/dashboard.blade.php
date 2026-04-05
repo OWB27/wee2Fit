@@ -15,16 +15,16 @@
                         <div class="flex items-start gap-3">
                             <span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white text-sm font-semibold text-green-700 shadow-sm">1</span>
                             <div>
-                                <h2 class="text-sm font-semibold text-slate-900">{{ __('messages.admin_foods_title') }}</h2>
-                                <p class="mt-1 text-sm leading-6 text-slate-600">{{ __('messages.admin_foods_description') }}</p>
+                                <h2 class="mini-heading">{{ __('messages.admin_foods_title') }}</h2>
+                                <p class="descriptor-text">{{ __('messages.admin_foods_description') }}</p>
                             </div>
                         </div>
 
                         <div class="flex items-start gap-3">
                             <span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white text-sm font-semibold text-green-700 shadow-sm">2</span>
                             <div>
-                                <h2 class="text-sm font-semibold text-slate-900">{{ __('messages.admin_users_title') }}</h2>
-                                <p class="mt-1 text-sm leading-6 text-slate-600">{{ __('messages.admin_users_description') }}</p>
+                                <h2 class="mini-heading">{{ __('messages.admin_users_title') }}</h2>
+                                <p class="descriptor-text">{{ __('messages.admin_users_description') }}</p>
                             </div>
                         </div>
                     </div>
@@ -34,20 +34,20 @@
 
         <section class="grid gap-4 md:grid-cols-2">
             <div class="section-card">
-                <h2 class="text-lg font-semibold text-slate-900">{{ __('messages.admin_foods_title') }}</h2>
-                <p class="mt-2 text-sm leading-6 text-slate-600">{{ __('messages.admin_foods_description') }}</p>
+                <h2 class="display-card-heading">{{ __('messages.admin_foods_title') }}</h2>
+                <p class="display-card-description">{{ __('messages.admin_foods_description') }}</p>
                 <div class="mt-5">
-                    <a href="{{ route('admin.foods.index') }}" class="btn btn-primary rounded-full border-0 px-5 normal-case shadow-sm">
+                    <a href="{{ route('admin.foods.index') }}" class="btn-ui btn-ui-md btn-ui-primary">
                         {{ __('messages.admin_manage_foods') }}
                     </a>
                 </div>
             </div>
 
             <div class="section-card">
-                <h2 class="text-lg font-semibold text-slate-900">{{ __('messages.admin_users_title') }}</h2>
-                <p class="mt-2 text-sm leading-6 text-slate-600">{{ __('messages.admin_users_description') }}</p>
+                <h2 class="display-card-heading">{{ __('messages.admin_users_title') }}</h2>
+                <p class="display-card-description">{{ __('messages.admin_users_description') }}</p>
                 <div class="mt-5">
-                    <a href="{{ route('admin.users.index') }}" class="btn btn-primary rounded-full border-0 px-5 normal-case shadow-sm">
+                    <a href="{{ route('admin.users.index') }}" class="btn-ui btn-ui-md btn-ui-primary">
                         {{ __('messages.admin_manage_users') }}
                     </a>
                 </div>

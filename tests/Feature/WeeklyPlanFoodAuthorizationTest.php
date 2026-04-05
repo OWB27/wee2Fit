@@ -141,7 +141,7 @@ class WeeklyPlanFoodAuthorizationTest extends TestCase
             ->delete(route('weekly-plan-foods.destroy', $weeklyPlanFood));
 
         $response
-            ->assertRedirect(route('weekly-plans.show', $weeklyPlan))
+            ->assertRedirect(route('weekly-plans.show', $weeklyPlan) . '#slot-3-breakfast')
             ->assertSessionHas('success', __('messages.weekly_plan_food_deleted'));
 
         $this->assertDatabaseMissing('weekly_plan_foods', [

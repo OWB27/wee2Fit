@@ -27,8 +27,8 @@ class Plan extends Model
     protected function casts(): array
     {
         return [
-            'height_cm' => 'decimal:2',
-            'weight_kg' => 'decimal:2',
+            'height_cm' => 'decimal:1',
+            'weight_kg' => 'decimal:1',
             'bmr' => 'decimal:2',
             'tdee' => 'decimal:2',
             'is_current' => 'boolean',

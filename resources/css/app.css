@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ==========================================================================
+   Base Theme
+   ========================================================================== */
 @layer base {
     :root {
         --app-bg: 248 250 248;
@@ -32,7 +35,120 @@
     }
 }
 
+/* ==========================================================================
+   Component System
+   ========================================================================== */
 @layer components {
+    /* ----------------------------------------------------------------------
+       Buttons, Badges, Links, and Action Elements
+       ---------------------------------------------------------------------- */
+    .btn-ui {
+        @apply inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-sm font-semibold normal-case leading-none transition;
+    }
+
+    .btn-ui-sm {
+        @apply min-h-9 px-4 text-sm;
+    }
+
+    .btn-ui-md {
+        @apply min-h-11 px-5 text-sm;
+    }
+
+    .btn-ui-primary {
+        @apply border border-transparent bg-green-600 text-white shadow-sm hover:bg-green-700 hover:shadow focus:outline-none focus:ring-2 focus:ring-green-200 focus:ring-offset-2;
+    }
+
+    .btn-ui-secondary {
+        @apply border border-slate-200 bg-white text-slate-700 shadow-sm hover:border-slate-300 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-slate-200 focus:ring-offset-2;
+    }
+
+    .btn-ui-ghost {
+        @apply border border-transparent bg-transparent text-slate-700 shadow-none hover:bg-slate-100 hover:text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-200 focus:ring-offset-2;
+    }
+
+    .btn-ui-nav {
+        @apply btn-ui btn-ui-sm btn-ui-ghost text-slate-600;
+    }
+
+    .btn-ui-nav-active {
+        @apply bg-green-50 text-green-700 hover:bg-green-100 hover:text-green-700;
+    }
+
+    .btn-ui-danger {
+        @apply border border-red-200 bg-white text-red-600 shadow-sm hover:border-red-300 hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-200 focus:ring-offset-2;
+    }
+
+    .badge-ui {
+        @apply inline-flex items-center justify-center rounded-full border px-3 py-1 text-xs font-semibold leading-none;
+    }
+
+    .badge-ui-sm {
+        @apply px-2.5 py-1 text-[11px];
+    }
+
+    .badge-ui-success {
+        @apply border-emerald-100 bg-emerald-100 text-emerald-700;
+    }
+
+    .badge-ui-warning {
+        @apply border-amber-100 bg-amber-100 text-amber-700;
+    }
+
+    .badge-ui-danger {
+        @apply border-red-100 bg-red-100 text-red-700;
+    }
+
+    .badge-ui-info {
+        @apply border-sky-100 bg-sky-100 text-sky-700;
+    }
+
+    .badge-ui-neutral {
+        @apply border-slate-200 bg-white text-slate-600;
+    }
+
+    .badge-ui-brand {
+        @apply border-green-100 bg-green-50 text-green-700;
+    }
+
+    .badge-ui-solid-success {
+        @apply border-transparent bg-emerald-600 text-white shadow-sm;
+    }
+
+    .table-action-cell {
+        @apply flex items-center justify-end gap-2;
+    }
+
+    .text-link-ui {
+        @apply text-sm font-medium text-green-700 transition hover:text-green-800;
+    }
+
+    .text-link-ui-underline {
+        @apply text-link-ui underline underline-offset-4;
+    }
+
+    .status-inline-success {
+        @apply text-sm font-medium text-green-700;
+    }
+
+    .quick-action-tile {
+        @apply flex items-center justify-between rounded-2xl px-4 py-4 text-sm font-medium transition;
+    }
+
+    .quick-action-tile-primary {
+        @apply bg-green-600 text-white shadow-sm hover:bg-green-700;
+    }
+
+    .quick-action-tile-secondary {
+        @apply border border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50;
+    }
+
+    .quick-action-tile-chevron {
+        @apply text-base leading-none opacity-80;
+    }
+
+    /* ----------------------------------------------------------------------
+       Global Layout Shells and Page-Level Structure
+       ---------------------------------------------------------------------- */
     .page-shell {
         @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8;
     }
@@ -41,10 +157,89 @@
         @apply space-y-8;
     }
 
+    .ui-stack-sm {
+        @apply space-y-4;
+    }
+
+    .ui-stack-md {
+        @apply space-y-6;
+    }
+
+    .layout-stat-grid {
+        @apply grid gap-4 xl:grid-cols-4;
+    }
+
+    .layout-feature-aside {
+        @apply grid gap-4 xl:grid-cols-[minmax(0,1.8fr),340px];
+    }
+
+    .layout-main-aside-compact {
+        @apply grid gap-6 xl:grid-cols-[minmax(0,1.45fr),320px];
+    }
+
+    .layout-main-aside-regular {
+        @apply grid gap-6 xl:grid-cols-[minmax(0,1.4fr),340px];
+    }
+
+    .layout-main-side-panel {
+        @apply grid gap-4 xl:grid-cols-[minmax(0,1.4fr),minmax(0,1fr)];
+    }
+
+    .layout-sidebar-main {
+        @apply grid gap-4 xl:grid-cols-[360px,minmax(0,1fr)];
+    }
+
     .page-header {
         @apply flex flex-col gap-3 md:flex-row md:items-end md:justify-between;
     }
 
+    .workspace-page-header {
+        @apply flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between;
+    }
+
+    .workspace-page-header-compact {
+        @apply flex flex-col gap-3;
+    }
+
+    .section-header {
+        @apply flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between;
+    }
+
+    .section-header-end {
+        @apply flex flex-col gap-3 md:flex-row md:items-end md:justify-between;
+    }
+
+    .card-header {
+        @apply flex items-center justify-between gap-3;
+    }
+
+    .header-actions {
+        @apply flex flex-wrap items-center gap-3;
+    }
+
+    .header-actions-tight {
+        @apply flex flex-wrap items-center gap-2;
+    }
+
+    .toolbar-chip-group {
+        @apply inline-flex rounded-full border border-slate-200 bg-white p-1 text-xs font-medium text-slate-500 shadow-sm;
+    }
+
+    .filter-chip-row {
+        @apply flex flex-wrap gap-2;
+    }
+
+    .table-scroll-shell {
+        @apply overflow-x-auto;
+    }
+
+    .pagination-shell {
+        @apply flex justify-center pt-2 sm:justify-end;
+    }
+
+    /* ----------------------------------------------------------------------
+       Shared Typography and Surface Patterns
+       ---------------------------------------------------------------------- */
     .page-kicker {
         @apply text-xs font-semibold uppercase tracking-[0.24em] text-green-700;
     }
@@ -69,6 +264,13 @@
         @apply rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8;
     }
 
+    .section-card-table {
+        @apply section-card overflow-hidden p-0;
+    }
+
+    /* ----------------------------------------------------------------------
+       Workspace Layout, Navigation, and Shared App Surfaces
+       ---------------------------------------------------------------------- */
     .workspace-root {
         @apply min-h-screen;
     }
@@ -182,7 +384,7 @@
     }
 
     .workspace-chip {
-        @apply inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-600;
+        @apply badge-ui badge-ui-neutral gap-2 px-3 py-1.5 font-medium;
     }
 
     .workspace-table-shell {
@@ -201,6 +403,76 @@
         @apply rounded-3xl border border-slate-200 bg-slate-50 p-4;
     }
 
+    .surface-panel-muted {
+        @apply rounded-[1.5rem] border border-slate-200 bg-slate-50 p-4;
+    }
+
+    .avg-target-card {
+        @apply flex h-full flex-col justify-between;
+    }
+
+    .macro-progress-card {
+        @apply rounded-[1.35rem] border border-slate-200 bg-white px-3 py-2.5 shadow-sm;
+    }
+
+    .macro-progress-icon {
+        @apply inline-flex h-10 w-10 items-center justify-center rounded-xl text-base shadow-sm;
+    }
+
+    .macro-progress-icon-protein {
+        @apply bg-rose-100 text-rose-600;
+    }
+
+    .macro-progress-icon-carbs {
+        @apply bg-amber-100 text-amber-600;
+    }
+
+    .macro-progress-icon-fat {
+        @apply bg-sky-100 text-sky-600;
+    }
+
+    .macro-progress-track {
+        @apply h-2 overflow-hidden rounded-full bg-slate-200;
+    }
+
+    .macro-progress-fill {
+        @apply h-2 rounded-full;
+    }
+
+    .macro-progress-fill-protein {
+        @apply bg-rose-500;
+    }
+
+    .macro-progress-fill-carbs {
+        @apply bg-amber-500;
+    }
+
+    .macro-progress-fill-fat {
+        @apply bg-sky-500;
+    }
+
+    .profile-choice-card {
+        @apply block cursor-pointer;
+    }
+
+    .profile-choice-panel {
+        @apply rounded-2xl border border-slate-200 bg-white px-4 py-4 text-sm text-slate-700 transition;
+    }
+
+    .profile-choice-card-cut:has(input:checked) .profile-choice-panel,
+    .profile-choice-card-mild:has(input:checked) .profile-choice-panel {
+        @apply border-emerald-400 bg-emerald-50 text-emerald-700;
+    }
+
+    .profile-choice-card-bulk:has(input:checked) .profile-choice-panel,
+    .profile-choice-card-moderate:has(input:checked) .profile-choice-panel {
+        @apply border-amber-300 bg-amber-50 text-amber-700;
+    }
+
+    .profile-choice-card-aggressive:has(input:checked) .profile-choice-panel {
+        @apply border-red-400 bg-red-100 text-red-800 ring-2 ring-red-200;
+    }
+
     .workspace-info-list {
         @apply space-y-3 text-sm text-slate-600;
     }
@@ -209,38 +481,101 @@
         @apply font-semibold text-slate-900;
     }
 
+    /* ----------------------------------------------------------------------
+       Weekly Meal Plan Board and Planner UI
+       ---------------------------------------------------------------------- */
     .planner-board {
-        @apply overflow-x-auto pb-2;
+        @apply overflow-x-auto pb-3;
     }
 
-    .planner-board-grid {
-        @apply grid min-w-[980px] gap-4 xl:min-w-0 xl:grid-cols-7;
+    .planner-surface {
+        @apply min-w-[980px] space-y-3;
     }
 
-    .planner-day-column {
-        @apply space-y-4;
+    .planner-summary-grid {
+        @apply grid gap-3;
+        grid-template-columns: repeat(7, minmax(128px, 1fr));
     }
 
-    .planner-day-header {
-        @apply rounded-[1.5rem] border border-slate-200 bg-slate-50 p-4;
+    .planner-summary-card {
+        @apply rounded-[1.2rem] border border-slate-200 bg-slate-50 px-3 py-3.5;
     }
 
-    .planner-meal-card {
-        @apply rounded-[1.5rem] border border-slate-200 bg-white p-4 shadow-sm;
+    .planner-rows {
+        @apply space-y-3;
+    }
+
+    .planner-row {
+        @apply rounded-[1.5rem] border border-slate-200 bg-white p-3 shadow-sm;
+    }
+
+    .planner-row-grid {
+        @apply grid gap-3;
+        grid-template-columns: repeat(7, minmax(128px, 1fr));
+    }
+
+    .planner-slot-card {
+        @apply rounded-[1.15rem] border border-slate-200 bg-slate-50/70 p-2.5;
     }
 
     .planner-food-card {
-        @apply rounded-2xl border border-slate-200 bg-slate-50 p-3;
+        @apply rounded-[0.95rem] border border-amber-200 bg-amber-100/80 px-2 py-2 text-[11px] shadow-sm;
+    }
+
+    .planner-food-name {
+        @apply truncate text-[11px] font-medium leading-4 text-slate-900;
+    }
+
+    .planner-food-meta {
+        @apply mt-1 truncate text-[11px] leading-4 text-slate-500;
+    }
+
+    .planner-food-delete-button {
+        @apply inline-flex items-center justify-center rounded-full border border-red-100 bg-red-50 px-2.5 py-1 text-[10px] font-medium normal-case leading-none text-red-600 transition hover:border-red-200 hover:bg-red-100;
     }
 
     .planner-empty-slot {
-        @apply rounded-2xl border border-dashed border-slate-200 bg-slate-50 p-4 text-sm text-slate-500;
+        @apply rounded-[1rem] border border-dashed border-slate-200 bg-white px-2 py-3 text-center text-[11px] leading-4 text-slate-500;
     }
 
+    .planner-add-button {
+        @apply inline-flex w-full items-center justify-center rounded-[1rem] border border-slate-200 bg-white px-2 py-2 text-[11px] font-medium text-slate-700 transition hover:border-green-200 hover:bg-green-50 hover:text-green-700;
+    }
+
+    /* ----------------------------------------------------------------------
+       Dashboard and Compact Summary Widgets
+       ---------------------------------------------------------------------- */
     .workspace-preview-metric {
         @apply rounded-3xl border border-slate-200 bg-white p-4 shadow-sm;
     }
 
+    .dashboard-weekly-plan-grid {
+        @apply grid gap-3 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-7;
+    }
+
+    .dashboard-weekly-plan-card {
+        @apply rounded-[1.35rem] border border-slate-200 bg-slate-50 px-3 py-3.5;
+    }
+
+    .dashboard-weekly-plan-meal {
+        @apply rounded-xl border border-slate-200 bg-white px-2 py-2 text-center shadow-sm;
+    }
+
+    .dashboard-weekly-plan-meal-inline {
+        @apply inline-flex max-w-full items-center gap-0.5 whitespace-nowrap;
+    }
+
+    .dashboard-weekly-plan-meal-emoji {
+        @apply shrink-0 text-[13px];
+    }
+
+    .dashboard-weekly-plan-meal-value {
+        @apply text-[11px] font-semibold leading-4 text-slate-900;
+    }
+
+    /* ----------------------------------------------------------------------
+       Public Pages, Marketing Sections, and Guest/Auth Shells
+       ---------------------------------------------------------------------- */
     .public-hero {
         @apply overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-sm;
     }
@@ -265,8 +600,64 @@
         @apply rounded-[1.5rem] border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md;
     }
 
+    .home-quick-card {
+        @apply rounded-[1.5rem] border border-slate-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md;
+    }
+
+    .home-link-card {
+        @apply rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-sm sm:p-7;
+    }
+
+    .home-link-chip {
+        @apply inline-flex items-center rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-medium text-slate-600;
+    }
+
     .public-food-card {
         @apply rounded-[1.75rem] border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md;
+    }
+
+    .food-library-card {
+        @apply overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md;
+    }
+
+    .food-library-media {
+        @apply relative flex h-56 items-center justify-center border-b border-slate-200 bg-stone-100;
+    }
+
+    .food-library-badge {
+        @apply badge-ui badge-ui-solid-success absolute right-4 top-4 px-3 py-1 font-medium;
+    }
+
+    .food-library-icon-wrap {
+        @apply inline-flex h-14 w-14 items-center justify-center rounded-full bg-white/85 text-2xl shadow-sm;
+    }
+
+    .food-library-image {
+        @apply h-full w-full object-cover;
+    }
+
+    .food-library-body {
+        @apply flex flex-col gap-3 p-3.5;
+    }
+
+    .food-library-category-pill {
+        @apply inline-flex w-fit items-center rounded-full border px-3 py-1 text-xs font-medium;
+    }
+
+    .food-library-energy {
+        @apply flex items-center gap-2 text-sm text-slate-500;
+    }
+
+    .food-library-energy-value {
+        @apply text-xl font-semibold tracking-tight text-slate-900;
+    }
+
+    .food-library-macro-grid {
+        @apply grid grid-cols-3 gap-2 border-t border-slate-200 pt-3;
+    }
+
+    .food-library-macro-card {
+        @apply rounded-2xl border border-white/80 px-3 py-3 text-center shadow-sm;
     }
 
     .public-icon-badge {
@@ -301,6 +692,9 @@
         @apply min-w-0 pr-1;
     }
 
+    /* ----------------------------------------------------------------------
+       Empty States, Display Cards, and Text Hierarchy Helpers
+       ---------------------------------------------------------------------- */
     .empty-state-card {
         @apply rounded-3xl border border-dashed border-slate-200 bg-slate-50 p-8 text-center sm:p-10;
     }
@@ -309,11 +703,150 @@
         @apply mx-auto inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-green-50 text-sm font-semibold text-green-700 shadow-sm;
     }
 
+    .empty-state-title {
+        @apply mt-4 text-lg font-semibold text-slate-900;
+    }
+
+    .empty-state-description {
+        @apply mx-auto mt-2 max-w-xl text-sm leading-6 text-slate-600;
+    }
+
+    .display-card-heading {
+        @apply text-lg font-semibold text-slate-900;
+    }
+
+    .display-card-description {
+        @apply mt-2 text-sm leading-6 text-slate-600;
+    }
+
+    .stat-card-note {
+        @apply mt-2 text-sm text-slate-600;
+    }
+
+    .meta-text {
+        @apply text-sm text-slate-500;
+    }
+
+    .meta-text-xs {
+        @apply text-xs text-slate-500;
+    }
+
+    .meta-text-strong {
+        @apply text-sm text-slate-600;
+    }
+
+    .summary-block {
+        @apply rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3;
+    }
+
+    .summary-block-label {
+        @apply text-sm text-slate-500;
+    }
+
+    .summary-block-value {
+        @apply mt-2 text-2xl font-semibold text-slate-900;
+    }
+
+    .list-item-title {
+        @apply font-medium text-slate-900;
+    }
+
+    .list-item-meta {
+        @apply mt-1 text-sm text-slate-500;
+    }
+
+    .info-row {
+        @apply flex items-center justify-between gap-3;
+    }
+
+    .info-row-label {
+        @apply text-sm text-slate-600;
+    }
+
+    .info-row-value {
+        @apply text-sm font-medium text-slate-900;
+    }
+
+    .key-stat {
+        @apply rounded-[1.25rem] border border-slate-200 bg-slate-50 p-4;
+    }
+
+    .key-stat-label {
+        @apply text-sm text-slate-500;
+    }
+
+    .key-stat-value {
+        @apply mt-2 text-lg font-semibold text-slate-900;
+    }
+
+    .mini-heading {
+        @apply text-sm font-semibold text-slate-900;
+    }
+
+    .descriptor-text {
+        @apply mt-1 text-sm text-slate-500;
+    }
+
+    .note-text {
+        @apply mt-3 text-sm leading-6 text-slate-600;
+    }
+
+    .tiny-label {
+        @apply text-xs font-medium uppercase tracking-[0.16em] text-slate-400;
+    }
+
+    /* ----------------------------------------------------------------------
+       Form Controls, Validation, and Form Layout Helpers
+       ---------------------------------------------------------------------- */
+    .form-input {
+        @apply min-h-11 w-full rounded-2xl border border-slate-200 bg-white px-4 text-sm text-slate-900 shadow-sm transition focus:border-green-600 focus:outline-none focus:ring-4 focus:ring-green-100;
+    }
+
     .form-select {
         @apply min-h-11 w-full rounded-2xl border border-slate-200 bg-white px-4 text-sm text-slate-900 shadow-sm transition focus:border-green-600 focus:outline-none focus:ring-4 focus:ring-green-100;
     }
 
     .form-textarea {
         @apply w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 shadow-sm transition focus:border-green-600 focus:outline-none focus:ring-4 focus:ring-green-100;
+    }
+
+    .form-file {
+        @apply block w-full rounded-2xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-700 shadow-sm transition file:mr-4 file:rounded-full file:border-0 file:bg-green-50 file:px-4 file:py-2 file:text-sm file:font-medium file:text-green-700 hover:file:bg-green-100 focus:border-green-600 focus:outline-none focus:ring-4 focus:ring-green-100;
+    }
+
+    .form-section {
+        @apply space-y-6;
+    }
+
+    .form-section-heading {
+        @apply text-lg font-semibold text-slate-900;
+    }
+
+    .form-section-description {
+        @apply mt-2 text-sm leading-6 text-slate-600;
+    }
+
+    .form-help {
+        @apply mt-2 text-xs text-slate-500;
+    }
+
+    .form-error {
+        @apply mt-2 text-sm text-red-600;
+    }
+
+    .form-actions {
+        @apply flex flex-wrap items-center gap-3;
+    }
+
+    .form-check-card {
+        @apply flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-700;
+    }
+
+    .form-checkbox {
+        @apply checkbox checkbox-sm rounded-md border-slate-300 text-green-600 [--chkbg:theme(colors.green.600)] [--chkfg:white];
+    }
+
+    .form-radio {
+        @apply radio radio-sm border-slate-300 text-green-600 [--chkbg:theme(colors.green.600)];
     }
 }

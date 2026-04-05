@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\UserTag;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -12,12 +13,35 @@ class AdminUserController extends Controller
     public function index(): View
     {
         $users = User::query()
+            ->with('tags')
             ->orderByDesc('id')
             ->get();
 
         return view('admin.users.index', [
             'users' => $users,
         ]);
+    }
+
+    public function edit(User $user): View
+    {
+        return view('admin.users.edit', [
+            'user' => $user->load('tags'),
+            'availableTags' => UserTag::query()->orderBy('id')->get(),
+        ]);
+    }
+
+    public function update(Request $request, User $user): RedirectResponse
+    {
+        $validated = $request->validate([
+            'user_tag_ids' => ['nullable', 'array'],
+            'user_tag_ids.*' => ['integer', 'exists:user_tags,id'],
+        ]);
+
+        $user->tags()->sync($validated['user_tag_ids'] ?? []);
+
+        return redirect()
+            ->route('admin.users.edit', $user)
+            ->with('success', __('messages.admin_user_updated'));
     }
 
     public function toggleActive(Request $request, User $user): RedirectResponse

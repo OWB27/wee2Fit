@@ -13,14 +13,14 @@
         @if ($users->isEmpty())
             <section class="empty-state-card">
                 <div class="empty-state-icon">AU</div>
-                <h2 class="mt-4 text-lg font-semibold text-slate-900">{{ __('messages.admin_users_empty') }}</h2>
-                <p class="mx-auto mt-2 max-w-xl text-sm leading-6 text-slate-600">
+                <h2 class="empty-state-title">{{ __('messages.admin_users_empty') }}</h2>
+                <p class="empty-state-description">
                     {{ __('messages.admin_users_description') }}
                 </p>
             </section>
         @else
-            <section class="section-card p-0 overflow-hidden">
-                <div class="overflow-x-auto">
+            <section class="section-card-table">
+                <div class="table-scroll-shell">
                     <table class="table">
                         <thead>
                             <tr class="text-slate-500">
@@ -29,6 +29,7 @@
                                 <th>{{ __('messages.admin_users_email') }}</th>
                                 <th>{{ __('messages.admin_users_role') }}</th>
                                 <th>{{ __('messages.admin_users_status') }}</th>
+                                <th>{{ __('messages.admin_user_tags_title') }}</th>
                                 <th>{{ __('messages.actions') }}</th>
                             </tr>
                         </thead>
@@ -40,39 +41,35 @@
                                     <td>{{ $user->email }}</td>
                                     <td>
                                         @if ($user->isAdmin())
-                                            <span class="badge badge-primary rounded-full">{{ __('messages.admin_users_role_admin') }}</span>
+                                            <span class="badge-ui badge-ui-info">{{ __('messages.admin_users_role_admin') }}</span>
                                         @else
-                                            <span class="badge badge-outline rounded-full text-slate-600">{{ __('messages.admin_users_role_user') }}</span>
+                                            <span class="badge-ui badge-ui-neutral">{{ __('messages.admin_users_role_user') }}</span>
                                         @endif
                                     </td>
                                     <td>
                                         @if ($user->isActive())
-                                            <span class="badge badge-success rounded-full">{{ __('messages.admin_users_status_active') }}</span>
+                                            <span class="badge-ui badge-ui-success">{{ __('messages.admin_users_status_active') }}</span>
                                         @else
-                                            <span class="badge badge-error rounded-full">{{ __('messages.admin_users_status_inactive') }}</span>
+                                            <span class="badge-ui badge-ui-danger">{{ __('messages.admin_users_status_inactive') }}</span>
                                         @endif
                                     </td>
                                     <td>
-                                        @if (auth()->id() === $user->id)
-                                            <span class="text-sm text-slate-500">
-                                                {{ __('messages.admin_users_current_you') }}
-                                            </span>
-                                        @else
-                                            <form action="{{ route('admin.users.toggle-active', $user) }}" method="POST">
-                                                @csrf
-                                                @method('PATCH')
-
-                                                @if ($user->isActive())
-                                                    <button type="submit" class="btn btn-error btn-sm rounded-full border-0 normal-case">
-                                                        {{ __('messages.admin_users_disable') }}
-                                                    </button>
-                                                @else
-                                                    <button type="submit" class="btn btn-success btn-sm rounded-full border-0 normal-case">
-                                                        {{ __('messages.admin_users_enable') }}
-                                                    </button>
-                                                @endif
-                                            </form>
-                                        @endif
+                                        <div class="flex flex-wrap gap-2">
+                                            @forelse ($user->tags as $tag)
+                                                <span class="badge-ui badge-ui-brand badge-ui-sm">
+                                                    {{ $tag->displayName() }}
+                                                </span>
+                                            @empty
+                                                <span class="text-sm text-slate-500">{{ __('messages.admin_user_no_tags') }}</span>
+                                            @endforelse
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="table-action-cell">
+                                            <a href="{{ route('admin.users.edit', $user) }}" class="btn-ui btn-ui-sm btn-ui-secondary">
+                                            {{ __('messages.edit') }}
+                                            </a>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach

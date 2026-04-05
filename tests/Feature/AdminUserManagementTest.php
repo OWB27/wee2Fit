@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\UserTag;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -49,5 +50,35 @@ class AdminUserManagementTest extends TestCase
             ->assertSessionHas('error', __('messages.admin_users_cannot_disable_self'));
 
         $this->assertTrue($admin->fresh()->is_active);
+    }
+
+    public function test_admin_can_update_user_tags(): void
+    {
+        $admin = User::factory()->create([
+            'role' => User::ROLE_ADMIN,
+            'is_active' => true,
+        ]);
+
+        $member = User::factory()->create([
+            'role' => User::ROLE_USER,
+            'is_active' => true,
+        ]);
+
+        $tagIds = UserTag::query()
+            ->whereIn('slug', ['new_user', 'test_account'])
+            ->pluck('id')
+            ->all();
+
+        $response = $this
+            ->actingAs($admin)
+            ->put(route('admin.users.update', $member), [
+                'user_tag_ids' => $tagIds,
+            ]);
+
+        $response
+            ->assertRedirect(route('admin.users.edit', $member))
+            ->assertSessionHas('success', __('messages.admin_user_updated'));
+
+        $this->assertEqualsCanonicalizing($tagIds, $member->fresh()->tags()->pluck('user_tags.id')->all());
     }
 }

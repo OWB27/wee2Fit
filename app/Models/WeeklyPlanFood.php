@@ -8,7 +8,7 @@ class WeeklyPlanFood extends Model
 {
     protected $table = 'weekly_plan_foods';
 
-    public const MEAL_TYPE_OPTIONS = ['breakfast', 'lunch', 'dinner', 'snack'];
+    public const MEAL_TYPE_OPTIONS = ['breakfast', 'lunch', 'dinner'];
 
     protected $fillable = [
         'weekly_plan_id',

@@ -6,6 +6,7 @@ use App\Http\Requests\StoreFoodRequest;
 use App\Http\Requests\UpdateFoodRequest;
 use App\Models\Food;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class AdminFoodController extends Controller
@@ -32,6 +33,11 @@ class AdminFoodController extends Controller
     {
         $data = $request->validated();
         $data['is_verified'] = $request->boolean('is_verified');
+        unset($data['image']);
+
+        if ($request->hasFile('image')) {
+            $data['image_path'] = $request->file('image')->store('foods', 'public');
+        }
 
         Food::create($data);
 
@@ -52,6 +58,15 @@ class AdminFoodController extends Controller
     {
         $data = $request->validated();
         $data['is_verified'] = $request->boolean('is_verified');
+        unset($data['image']);
+
+        if ($request->hasFile('image')) {
+            if (! empty($food->image_path)) {
+                Storage::disk('public')->delete($food->image_path);
+            }
+
+            $data['image_path'] = $request->file('image')->store('foods', 'public');
+        }
 
         $food->update($data);
 
@@ -62,6 +77,10 @@ class AdminFoodController extends Controller
 
     public function destroy(Food $food): RedirectResponse
     {
+        if (! empty($food->image_path)) {
+            Storage::disk('public')->delete($food->image_path);
+        }
+
         $food->delete();
 
         return redirect()

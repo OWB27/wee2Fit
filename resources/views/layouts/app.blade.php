@@ -8,41 +8,6 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body>
-    @php
-        $user = auth()->user();
-        $publicLinks = [
-            ['route' => 'home', 'label' => __('messages.nav_home'), 'active' => 'home'],
-            ['route' => 'methodology', 'label' => __('messages.nav_methodology'), 'active' => 'methodology'],
-            ['route' => 'foods.index', 'label' => __('messages.nav_food_library'), 'active' => 'foods.*'],
-        ];
-        $mobilePublicGroups = [
-            [
-                'label' => app()->getLocale() === 'zh_CN' ? json_decode('"\u8d44\u6e90"') : 'Resources',
-                'links' => [
-                    ['route' => 'methodology', 'label' => __('messages.nav_methodology'), 'active' => 'methodology'],
-                    ['route' => 'foods.index', 'label' => __('messages.nav_food_library'), 'active' => 'foods.*'],
-                ],
-            ],
-        ];
-
-        $userLinks = [];
-        $accountLabel = app()->getLocale() === 'zh_CN' ? json_decode('"\u4e2a\u4eba\u4e2d\u5fc3"') : 'Account';
-
-        if (auth()->check()) {
-            $userLinks = [
-                ['route' => 'my-profile.edit', 'label' => __('messages.nav_my_profile'), 'active' => 'my-profile.*'],
-                ['route' => 'plans.create', 'label' => __('messages.nav_generate_plan'), 'active' => 'plans.create'],
-                ['route' => 'plans.current', 'label' => __('messages.nav_current_plan'), 'active' => 'plans.current'],
-                ['route' => 'progress.index', 'label' => __('messages.nav_progress'), 'active' => 'progress.*'],
-                ['route' => 'weekly-plans.index', 'label' => __('messages.nav_weekly_plans'), 'active' => 'weekly-plans.*'],
-            ];
-
-            if (auth()->user()->role === 'admin') {
-                $userLinks[] = ['route' => 'admin.dashboard', 'label' => __('messages.nav_admin'), 'active' => 'admin.*'];
-            }
-        }
-    @endphp
-
     <div class="relative min-h-screen">
         <header x-data="{ mobileOpen: false }" class="sticky top-0 z-40 border-b border-slate-200 bg-white/90 backdrop-blur">
             <div class="page-shell">
@@ -54,66 +19,68 @@
                         </a>
 
                         <nav class="hidden xl:flex xl:flex-wrap xl:items-center xl:gap-2">
-                            @foreach ($publicLinks as $link)
-                                <a
-                                    href="{{ route($link['route']) }}"
-                                    class="btn btn-sm rounded-full border-0 normal-case shadow-none {{ request()->routeIs($link['active']) ? 'bg-green-50 text-green-700 hover:bg-green-100' : 'btn-ghost text-slate-600 hover:bg-slate-100 hover:text-slate-900' }}"
-                                >
-                                    {{ $link['label'] }}
-                                </a>
-                            @endforeach
+                            <a
+                                href="{{ route('home') }}"
+                                class="{{ request()->routeIs('home') ? 'btn-ui-nav btn-ui-nav-active' : 'btn-ui-nav' }}"
+                            >
+                                {{ __('messages.nav_home') }}
+                            </a>
+                            <a
+                                href="{{ route('methodology') }}"
+                                class="{{ request()->routeIs('methodology') ? 'btn-ui-nav btn-ui-nav-active' : 'btn-ui-nav' }}"
+                            >
+                                {{ __('messages.nav_methodology') }}
+                            </a>
+                            <a
+                                href="{{ route('foods.index') }}"
+                                class="{{ request()->routeIs('foods.*') ? 'btn-ui-nav btn-ui-nav-active' : 'btn-ui-nav' }}"
+                            >
+                                {{ __('messages.nav_food_library') }}
+                            </a>
                         </nav>
                     </div>
 
                     <div class="hidden items-center gap-3 xl:flex">
                         @auth
                             <div class="dropdown dropdown-end">
-                                <label tabindex="0" class="btn btn-ghost btn-sm rounded-full normal-case text-slate-600 hover:bg-slate-100">
+                                <label tabindex="0" class="btn-ui-nav">
                                     {{ __('messages.nav_language') }}
                                 </label>
 
                                 <ul tabindex="0" class="menu dropdown-content z-[1] mt-2 w-40 rounded-2xl border border-slate-200 bg-white p-2 shadow-lg">
-                                    <li>
-                                        <a href="{{ route('locale.switch', 'en') }}">
-                                            {{ __('messages.nav_english') }}
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ route('locale.switch', 'zh_CN') }}">
-                                            {{ json_decode('"\u4e2d\u6587"') }}
-                                        </a>
-                                    </li>
+                                    <li><a href="{{ route('locale.switch', 'en') }}">{{ __('messages.nav_english') }}</a></li>
+                                    <li><a href="{{ route('locale.switch', 'zh_CN') }}">{{ __('messages.nav_chinese') }}</a></li>
                                 </ul>
                             </div>
 
                             <div class="dropdown dropdown-end">
                                 <label tabindex="0" class="topbar-user-card cursor-pointer transition hover:border-slate-300 hover:bg-slate-50">
                                     <span class="topbar-user-avatar">
-                                        {{ strtoupper(substr($user->name ?? 'W', 0, 1)) }}
+                                        {{ strtoupper(substr(auth()->user()->name ?? 'W', 0, 1)) }}
                                     </span>
                                     <div class="topbar-user-meta">
-                                        <div class="truncate text-sm font-semibold text-slate-900">{{ $user->name ?? __('messages.app_name') }}</div>
-                                        <div class="text-xs text-slate-500">{{ $user->email ?? '' }}</div>
+                                        <div class="truncate text-sm font-semibold text-slate-900">{{ auth()->user()->name ?? __('messages.app_name') }}</div>
+                                        <div class="text-xs text-slate-500">{{ auth()->user()->email ?? '' }}</div>
                                     </div>
                                 </label>
 
                                 <div tabindex="0" class="dropdown-content z-[1] mt-2 w-64 rounded-3xl border border-slate-200 bg-white p-3 shadow-lg">
                                     <div class="mb-2 px-3 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
-                                        {{ $accountLabel }}
+                                        {{ __('messages.ui_account') }}
                                     </div>
                                     <ul class="menu w-full gap-1 rounded-2xl p-0">
                                         <li>
-                                            <a href="{{ route('dashboard') }}" class="rounded-2xl bg-green-50 font-medium text-green-700 hover:bg-green-100">
-                                                {{ $accountLabel }}
+                                            <a href="{{ route('dashboard') }}" class="rounded-2xl">
+                                                {{ __('messages.ui_account') }}
                                             </a>
                                         </li>
-                                        @foreach ($userLinks as $link)
-                                            <li>
-                                                <a href="{{ route($link['route']) }}" class="rounded-2xl">
-                                                    {{ $link['label'] }}
-                                                </a>
-                                            </li>
-                                        @endforeach
+                                        <li><a href="{{ route('my-profile.edit') }}" class="rounded-2xl">{{ __('messages.nav_my_profile') }}</a></li>
+                                        <li><a href="{{ route('plans.current') }}" class="rounded-2xl">{{ __('messages.nav_plan') }}</a></li>
+                                        <li><a href="{{ route('progress.index') }}" class="rounded-2xl">{{ __('messages.nav_progress') }}</a></li>
+                                        <li><a href="{{ route('weekly-plans.index') }}" class="rounded-2xl">{{ __('messages.nav_weekly_plans') }}</a></li>
+                                        @if (auth()->user()->role === 'admin')
+                                            <li><a href="{{ route('admin.dashboard') }}" class="rounded-2xl">{{ __('messages.nav_admin') }}</a></li>
+                                        @endif
                                         <li class="mt-1 border-t border-slate-200 pt-1">
                                             <form method="POST" action="{{ route('logout') }}">
                                                 @csrf
@@ -127,29 +94,21 @@
                             </div>
                         @else
                             <div class="dropdown dropdown-end">
-                                <label tabindex="0" class="btn btn-ghost btn-sm rounded-full normal-case text-slate-600 hover:bg-slate-100">
+                                <label tabindex="0" class="btn-ui-nav">
                                     {{ __('messages.nav_language') }}
                                 </label>
 
                                 <ul tabindex="0" class="menu dropdown-content z-[1] mt-2 w-40 rounded-2xl border border-slate-200 bg-white p-2 shadow-lg">
-                                    <li>
-                                        <a href="{{ route('locale.switch', 'en') }}">
-                                            {{ __('messages.nav_english') }}
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ route('locale.switch', 'zh_CN') }}">
-                                            {{ json_decode('"\u4e2d\u6587"') }}
-                                        </a>
-                                    </li>
+                                    <li><a href="{{ route('locale.switch', 'en') }}">{{ __('messages.nav_english') }}</a></li>
+                                    <li><a href="{{ route('locale.switch', 'zh_CN') }}">{{ __('messages.nav_chinese') }}</a></li>
                                 </ul>
                             </div>
 
-                            <a href="{{ route('login') }}" class="btn btn-ghost btn-sm rounded-full normal-case text-slate-700 hover:bg-slate-100">
+                            <a href="{{ route('login') }}" class="btn-ui btn-ui-sm btn-ui-ghost">
                                 {{ __('messages.nav_login') }}
                             </a>
 
-                            <a href="{{ route('register') }}" class="btn btn-primary btn-sm rounded-full border-0 normal-case shadow-sm">
+                            <a href="{{ route('register') }}" class="btn-ui btn-ui-sm btn-ui-primary">
                                 {{ __('messages.nav_register') }}
                             </a>
                         @endauth
@@ -158,49 +117,45 @@
                     <div class="flex items-center gap-2 xl:hidden">
                         @auth
                             <div class="dropdown dropdown-end">
-                                <label tabindex="0" class="btn btn-ghost btn-sm rounded-full p-1 text-slate-700 hover:bg-slate-100">
+                                <label tabindex="0" class="btn-ui btn-ui-sm btn-ui-ghost p-1">
                                     <span class="topbar-user-avatar">
-                                        {{ strtoupper(substr($user->name ?? 'W', 0, 1)) }}
+                                        {{ strtoupper(substr(auth()->user()->name ?? 'W', 0, 1)) }}
                                     </span>
                                 </label>
 
                                 <div tabindex="0" class="dropdown-content z-[1] mt-2 w-72 rounded-3xl border border-slate-200 bg-white p-4 shadow-lg">
                                     <div class="topbar-user-card rounded-3xl">
                                         <span class="topbar-user-avatar">
-                                            {{ strtoupper(substr($user->name ?? 'W', 0, 1)) }}
+                                            {{ strtoupper(substr(auth()->user()->name ?? 'W', 0, 1)) }}
                                         </span>
                                         <div class="topbar-user-meta">
-                                            <div class="truncate text-sm font-semibold text-slate-900">{{ $user->name ?? __('messages.app_name') }}</div>
-                                            <div class="truncate text-xs text-slate-500">{{ $user->email ?? '' }}</div>
+                                            <div class="truncate text-sm font-semibold text-slate-900">{{ auth()->user()->name ?? __('messages.app_name') }}</div>
+                                            <div class="truncate text-xs text-slate-500">{{ auth()->user()->email ?? '' }}</div>
                                         </div>
                                     </div>
 
                                     <div class="mt-4 border-t border-slate-200 pt-4">
                                         <div class="mb-4 text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
-                                            {{ $accountLabel }}
+                                            {{ __('messages.ui_account') }}
                                         </div>
                                         <div class="flex flex-col gap-2">
-                                            <a
-                                                href="{{ route('dashboard') }}"
-                                                class="btn justify-start rounded-2xl border-0 bg-green-50 normal-case text-green-700 shadow-none hover:bg-green-100"
-                                            >
-                                                {{ $accountLabel }}
+                                            <a href="{{ route('dashboard') }}" class="btn-ui btn-ui-ghost justify-start rounded-2xl px-4">
+                                                {{ __('messages.ui_account') }}
                                             </a>
-                                            @foreach ($userLinks as $link)
-                                                <a
-                                                    href="{{ route($link['route']) }}"
-                                                    class="btn justify-start rounded-2xl border-0 normal-case shadow-none {{ request()->routeIs($link['active']) ? 'bg-green-50 text-green-700 hover:bg-green-100' : 'btn-ghost text-slate-700 hover:bg-slate-100' }}"
-                                                >
-                                                    {{ $link['label'] }}
-                                                </a>
-                                            @endforeach
+                                            <a href="{{ route('my-profile.edit') }}" class="btn-ui btn-ui-ghost justify-start rounded-2xl px-4">{{ __('messages.nav_my_profile') }}</a>
+                                            <a href="{{ route('plans.current') }}" class="btn-ui btn-ui-ghost justify-start rounded-2xl px-4">{{ __('messages.nav_plan') }}</a>
+                                            <a href="{{ route('progress.index') }}" class="btn-ui btn-ui-ghost justify-start rounded-2xl px-4">{{ __('messages.nav_progress') }}</a>
+                                            <a href="{{ route('weekly-plans.index') }}" class="btn-ui btn-ui-ghost justify-start rounded-2xl px-4">{{ __('messages.nav_weekly_plans') }}</a>
+                                            @if (auth()->user()->role === 'admin')
+                                                <a href="{{ route('admin.dashboard') }}" class="btn-ui btn-ui-ghost justify-start rounded-2xl px-4">{{ __('messages.nav_admin') }}</a>
+                                            @endif
                                         </div>
                                     </div>
 
                                     <div class="mt-4 border-t border-slate-200 pt-4">
                                         <form method="POST" action="{{ route('logout') }}">
                                             @csrf
-                                            <button type="submit" class="btn btn-ghost btn-sm w-full justify-start rounded-2xl normal-case text-red-600 hover:bg-red-50">
+                                            <button type="submit" class="btn-ui btn-ui-sm btn-ui-ghost w-full justify-start rounded-2xl text-red-600 hover:text-red-600 hover:bg-red-50">
                                                 {{ __('messages.nav_logout') }}
                                             </button>
                                         </form>
@@ -211,7 +166,7 @@
 
                         <button
                             type="button"
-                            class="btn btn-ghost btn-sm rounded-full"
+                            class="btn-ui btn-ui-sm btn-ui-ghost"
                             @click="mobileOpen = !mobileOpen"
                             :aria-expanded="mobileOpen.toString()"
                             aria-label="Toggle navigation"
@@ -228,50 +183,45 @@
 
                 <div x-cloak x-show="mobileOpen" x-transition.opacity class="border-t border-slate-200 py-4 xl:hidden">
                     <div class="space-y-4">
-                        @foreach ($mobilePublicGroups as $group)
-                            <div class="rounded-3xl border border-slate-200 bg-white p-4 shadow-sm">
-                                <div class="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
-                                    {{ $group['label'] }}
-                                </div>
-                                <div class="flex flex-col gap-2">
-                                    @foreach ($group['links'] as $link)
-                                        <a
-                                            href="{{ route($link['route']) }}"
-                                            class="btn justify-start rounded-2xl border-0 normal-case shadow-none {{ request()->routeIs($link['active']) ? 'bg-green-50 text-green-700 hover:bg-green-100' : 'btn-ghost text-slate-700 hover:bg-slate-100' }}"
-                                        >
-                                            {{ $link['label'] }}
-                                        </a>
-                                    @endforeach
-                                </div>
+                        <div class="rounded-3xl border border-slate-200 bg-white p-4 shadow-sm">
+                            <div class="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
+                                {{ __('messages.ui_resources_section') }}
                             </div>
-                        @endforeach
+                            <div class="flex flex-col gap-2">
+                                        <a href="{{ route('methodology') }}" class="{{ request()->routeIs('methodology') ? 'btn-ui btn-ui-ghost justify-start rounded-2xl px-4 btn-ui-nav-active' : 'btn-ui btn-ui-ghost justify-start rounded-2xl px-4' }}">
+                                            {{ __('messages.nav_methodology') }}
+                                        </a>
+                                        <a href="{{ route('foods.index') }}" class="{{ request()->routeIs('foods.*') ? 'btn-ui btn-ui-ghost justify-start rounded-2xl px-4 btn-ui-nav-active' : 'btn-ui btn-ui-ghost justify-start rounded-2xl px-4' }}">
+                                            {{ __('messages.nav_food_library') }}
+                                        </a>
+                            </div>
+                        </div>
 
                         <div class="rounded-3xl border border-slate-200 bg-white p-4 shadow-sm">
                             <div class="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
                                 {{ __('messages.nav_language') }}
                             </div>
                             <div class="flex flex-wrap gap-2">
-                                <a href="{{ route('locale.switch', 'en') }}" class="btn btn-outline btn-sm rounded-full border-slate-200 normal-case">
+                                <a href="{{ route('locale.switch', 'en') }}" class="btn-ui btn-ui-sm btn-ui-secondary">
                                     {{ __('messages.nav_english') }}
                                 </a>
-                                <a href="{{ route('locale.switch', 'zh_CN') }}" class="btn btn-outline btn-sm rounded-full border-slate-200 normal-case">
-                                    {{ json_decode('"\u4e2d\u6587"') }}
+                                <a href="{{ route('locale.switch', 'zh_CN') }}" class="btn-ui btn-ui-sm btn-ui-secondary">
+                                    {{ __('messages.nav_chinese') }}
                                 </a>
                             </div>
                         </div>
                     </div>
 
-                    <div class="mt-4 flex flex-wrap gap-2 border-t border-slate-200 pt-4">
-                        @auth
-                        @else
-                            <a href="{{ route('login') }}" class="btn btn-ghost btn-sm rounded-full normal-case">
+                    @guest
+                        <div class="mt-4 flex flex-wrap gap-2 border-t border-slate-200 pt-4">
+                            <a href="{{ route('login') }}" class="btn-ui btn-ui-sm btn-ui-ghost">
                                 {{ __('messages.nav_login') }}
                             </a>
-                            <a href="{{ route('register') }}" class="btn btn-primary btn-sm rounded-full border-0 normal-case">
+                            <a href="{{ route('register') }}" class="btn-ui btn-ui-sm btn-ui-primary">
                                 {{ __('messages.nav_register') }}
                             </a>
-                        @endauth
-                    </div>
+                        </div>
+                    @endguest
                 </div>
             </div>
         </header>

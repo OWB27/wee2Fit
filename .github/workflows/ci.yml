@@ -1,11 +1,20 @@
-name: Laravel Tests
+name: CI
 
 on:
   push:
   pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  test:
+  app-checks:
+    name: Test And Build
     runs-on: ubuntu-latest
 
     steps:
@@ -15,14 +24,15 @@ jobs:
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: "8.4"
+          php-version: "8.3"
           extensions: mbstring, pdo, pdo_sqlite
           coverage: none
 
-      - name: Setup Node.js
+      - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "18"
+          node-version: "20"
+          cache: npm
 
       - name: Cache Composer dependencies
         uses: actions/cache@v4
@@ -32,27 +42,21 @@ jobs:
           restore-keys: |
             composer-${{ runner.os }}-
 
-      - name: Cache npm dependencies
-        uses: actions/cache@v4
-        with:
-          path: node_modules
-          key: npm-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            npm-${{ runner.os }}-
-
       - name: Install PHP dependencies
         run: composer install --no-interaction --prefer-dist --no-progress
 
-      - name: Install npm dependencies
+      - name: Install Node dependencies
         run: npm ci
 
-      - name: Build assets
-        run: npm run build
-
-      - name: Prepare environment
+      - name: Prepare Laravel environment
         run: |
           cp .env.example .env
+          touch database/database.sqlite
           php artisan key:generate
+          php artisan migrate --force
 
-      - name: Run test suite
+      - name: Run automated tests
         run: php artisan test
+
+      - name: Build frontend assets
+        run: npm run build
