@@ -158,23 +158,27 @@ class DemoDataSeeder extends Seeder
         // 5) Current plan for normal user
         $user->plans()->update(['is_current' => false]);
 
-        Plan::create([
-            'user_id' => $user->id,
-            'age' => 20,
-            'sex' => 'male',
-            'height_cm' => 175.5,
-            'weight_kg' => 70.2,
-            'activity_level' => 'moderate',
-            'goal' => 'cut',
-            'intensity' => 'mild',
-            'bmr' => 1671.38,
-            'tdee' => 2590.64,
-            'target_calories' => 2341,
-            'protein_g' => 205,
-            'carbs_g' => 234,
-            'fat_g' => 65,
-            'is_current' => true,
-        ]);
+        Plan::updateOrCreate(
+            [
+                'user_id' => $user->id,
+                'is_current' => true,
+            ],
+            [
+                'age' => 20,
+                'sex' => 'male',
+                'height_cm' => 175.5,
+                'weight_kg' => 70.2,
+                'activity_level' => 'moderate',
+                'goal' => 'cut',
+                'intensity' => 'mild',
+                'bmr' => 1671.38,
+                'tdee' => 2590.64,
+                'target_calories' => 2341,
+                'protein_g' => 205,
+                'carbs_g' => 234,
+                'fat_g' => 65,
+            ]
+        );
 
         // 6) Body metrics
         $metricsData = [
@@ -275,13 +279,13 @@ class DemoDataSeeder extends Seeder
             [
                 'food_id' => $foodMap['Banana']->id,
                 'day_of_week' => 2,
-                'meal_type' => 'snack',
+                'meal_type' => 'lunch',
                 'amount_g' => 120,
             ],
             [
                 'food_id' => $foodMap['Almonds']->id,
                 'day_of_week' => 3,
-                'meal_type' => 'snack',
+                'meal_type' => 'dinner',
                 'amount_g' => 30,
             ],
         ];
