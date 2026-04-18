@@ -33,6 +33,7 @@ RUN mkdir -p /app/storage/app/public \
 
 RUN php artisan storage:link || true
 
-EXPOSE 80
+EXPOSE 8080
 
-CMD ["sh", "-c", "php artisan serve --host=0.0.0.0 --port=${PORT:-80}"]
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8080"]
+
