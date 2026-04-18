@@ -34,8 +34,9 @@ RUN mkdir -p /app/storage/app/public \
     /app/storage/logs
 
 RUN php artisan storage:link || true
+RUN chmod +x /app/docker/start-container.sh
 
 EXPOSE 8080
 
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8080"]
+CMD ["/app/docker/start-container.sh"]
 
