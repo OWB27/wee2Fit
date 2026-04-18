@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ $title ?? __('messages.app_name') }}</title>
+    <link rel="icon" type="image/svg+xml" href="{{ asset('logo-mark.svg') }}">
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -13,8 +14,7 @@
             <aside class="workspace-sidebar hidden lg:block">
                 <div class="workspace-sidebar-panel">
                     <a href="{{ route('home') }}" class="workspace-brand">
-                        <span class="workspace-brand-mark">W</span>
-                        <span>{{ __('messages.app_name') }}</span>
+                        <x-brand-logo />
                     </a>
 
                     <section>
@@ -84,8 +84,7 @@
                         <div class="workspace-topbar-shell">
                             <div class="flex items-center gap-3">
                                 <a href="{{ route('home') }}" class="workspace-brand lg:hidden">
-                                    <span class="workspace-brand-mark">W</span>
-                                    <span>{{ __('messages.app_name') }}</span>
+                                    <x-brand-logo />
                                 </a>
                             </div>
 

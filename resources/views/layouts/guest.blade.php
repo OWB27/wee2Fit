@@ -6,6 +6,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ __('messages.app_name') }}</title>
+    <link rel="icon" type="image/svg+xml" href="{{ asset('logo-mark.svg') }}">
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -18,8 +19,7 @@
                 <div class="site-topbar-shell">
                     <div class="flex min-w-0 flex-1 items-center gap-4">
                         <a href="{{ route('home') }}" class="workspace-brand">
-                            <span class="workspace-brand-mark">W</span>
-                            {{ __('messages.app_name') }}
+                            <x-brand-logo />
                         </a>
 
                         <nav class="hidden md:flex md:flex-wrap md:items-center md:gap-2">

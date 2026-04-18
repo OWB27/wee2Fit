@@ -1,0 +1,24 @@
+<svg width="230" height="56" viewBox="0 0 230 56" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="logoTitle logoDesc">
+  <title id="logoTitle">wee2Fit logo</title>
+  <desc id="logoDesc">The wee2Fit wordmark with a geometric W progress mark.</desc>
+  <defs>
+    <linearGradient id="lockupGradient" x1="6" y1="5" x2="41" y2="43" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#10B981"/>
+      <stop offset="1" stop-color="#047857"/>
+    </linearGradient>
+    <radialGradient id="lockupGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(35 12) rotate(133.21) scale(17.9975)">
+      <stop stop-color="white" stop-opacity="0.32"/>
+      <stop offset="1" stop-color="white" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <g transform="translate(4 4)">
+    <rect x="2" y="2" width="44" height="44" rx="14" fill="url(#lockupGradient)"/>
+    <rect x="3" y="3" width="42" height="42" rx="13" stroke="white" stroke-opacity="0.16"/>
+    <circle cx="34.5" cy="13.5" r="11" fill="url(#lockupGlow)"/>
+    <path d="M11 15.5L17 31L24 21L30.25 31L37 14.5" stroke="white" stroke-width="4.75" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="37" cy="14.5" r="3.4" fill="#A7F3D0" stroke="#ECFDF5" stroke-width="1.6"/>
+  </g>
+  <text x="64" y="33.5" fill="#0F172A" font-family="'Trebuchet MS', 'Segoe UI', Arial, sans-serif" font-size="27" font-weight="700" letter-spacing="-0.8">
+    wee2<tspan fill="#059669">Fit</tspan>
+  </text>
+</svg>
